@@ -1,0 +1,333 @@
+{
+  "metadata": {
+    "notice": "All costs and rates provided in this database are estimates for planning purposes and not guaranteed market prices. Actual prices may fluctuate based on season, availability, and market conditions.",
+    "version": "1.0.0",
+    "last_updated": "2026-11-25"
+  },
+  "destinations": [
+    {
+      "name": "Murree",
+      "region": "Punjab / Rawalpindi District",
+      "category": "Mountains",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 3000,
+      "base_accommodation_cost_per_room_night": 4500,
+      "food_cost_per_person_day": 2000,
+      "activities_misc_cost_per_person": 2500,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 3500,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 5500,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.2,
+          "accommodation_per_room_night": 11000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Mall Road walking & shopping",
+        "Patriata Chairlift & Cable Car ride",
+        "Pindi Point view & evening sunset",
+        "Kashmir Point serene pine walks"
+      ]
+    },
+    {
+      "name": "Nathiagali",
+      "region": "Khyber Pakhtunkhwa / Galyat",
+      "category": "Mountains",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 3500,
+      "base_accommodation_cost_per_room_night": 5000,
+      "food_cost_per_person_day": 2200,
+      "activities_misc_cost_per_person": 2500,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 4000,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 6500,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.2,
+          "accommodation_per_room_night": 13000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Mukshpuri Peak scenic trek",
+        "Miranjani Peak alpine hike",
+        "Governor House Pine Trail",
+        "Ayubia National Park & Pipeline Track"
+      ]
+    },
+    {
+      "name": "Swat",
+      "region": "Khyber Pakhtunkhwa / Swat Valley",
+      "category": "Lakes & Nature",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 5000,
+      "base_accommodation_cost_per_room_night": 4500,
+      "food_cost_per_person_day": 2200,
+      "activities_misc_cost_per_person": 3000,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 3800,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 6000,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.2,
+          "accommodation_per_room_night": 12500,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Fizagat Park riverfront relaxation",
+        "Malam Jabba Ski Resort & Zipline",
+        "White Palace Marghazar visit",
+        "Swat Museum & Buddhist archaeological sites"
+      ]
+    },
+    {
+      "name": "Kalam",
+      "region": "Khyber Pakhtunkhwa / Upper Swat",
+      "category": "Lakes & Nature",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 6500,
+      "base_accommodation_cost_per_room_night": 5000,
+      "food_cost_per_person_day": 2400,
+      "activities_misc_cost_per_person": 3500,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 4200,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 7000,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.2,
+          "accommodation_per_room_night": 14000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Mahodand Lake 4x4 Jeep excursion",
+        "Ushu Forest lush cedar pine walks",
+        "Matiltan Waterfall viewpoint",
+        "Kundol Lake adventure trek"
+      ]
+    },
+    {
+      "name": "Hunza",
+      "region": "Gilgit-Baltistan / Hunza Valley",
+      "category": "Mountains",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 12000,
+      "base_accommodation_cost_per_room_night": 6500,
+      "food_cost_per_person_day": 2800,
+      "activities_misc_cost_per_person": 4500,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 5500,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 9000,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.3,
+          "accommodation_per_room_night": 20000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Baltit and Altit Forts historic tour",
+        "Attabad Lake turquoise boating & jet ski",
+        "Eagle's Nest panoramic Rakaposhi sunset",
+        "Hussaini Suspension Bridge crossing & Passu Cones"
+      ]
+    },
+    {
+      "name": "Skardu",
+      "region": "Gilgit-Baltistan / Baltistan",
+      "category": "Lakes & Nature",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 14000,
+      "base_accommodation_cost_per_room_night": 7000,
+      "food_cost_per_person_day": 3000,
+      "activities_misc_cost_per_person": 5000,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 6000,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 9500,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.3,
+          "accommodation_per_room_night": 22000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Shangrila Resort & Lower Kachura Lake",
+        "Upper Kachura Lake boat ride",
+        "Sarfaranga Cold Desert safari & stargazing",
+        "Deosai Plains wilderness & Sheosar Lake"
+      ]
+    },
+    {
+      "name": "Naran",
+      "region": "Khyber Pakhtunkhwa / Kaghan Valley",
+      "category": "Lakes & Nature",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 6000,
+      "base_accommodation_cost_per_room_night": 5000,
+      "food_cost_per_person_day": 2400,
+      "activities_misc_cost_per_person": 3500,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 4500,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.4,
+          "accommodation_per_room_night": 7500,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.2,
+          "accommodation_per_room_night": 15000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 2.0
+        }
+      },
+      "highlights": [
+        "Lake Saiful Muluk 4x4 Jeep ride & boating",
+        "Babusar Top high mountain pass viewpoint",
+        "Lulusar Lake photography stop",
+        "Kunhar River rafting & trout fish dinner"
+      ]
+    },
+    {
+      "name": "Lahore",
+      "region": "Punjab",
+      "category": "Historical Places",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 3500,
+      "base_accommodation_cost_per_room_night": 4000,
+      "food_cost_per_person_day": 2500,
+      "activities_misc_cost_per_person": 2000,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 3200,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.3,
+          "accommodation_per_room_night": 5500,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.1
+        },
+        "Premium": {
+          "transport_multiplier": 2.0,
+          "accommodation_per_room_night": 12000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 1.8
+        }
+      },
+      "highlights": [
+        "Lahore Fort & Badshahi Mosque heritage tour",
+        "Walled City & Delhi Gate architectural walk",
+        "Shalimar Gardens Mughal heritage",
+        "Food Street dinner overlooking Badshahi Mosque"
+      ]
+    },
+    {
+      "name": "Islamabad",
+      "region": "Federal Capital",
+      "category": "Historical Places",
+      "room_capacity": 2,
+      "base_transport_cost_per_person": 3000,
+      "base_accommodation_cost_per_room_night": 4500,
+      "food_cost_per_person_day": 2500,
+      "activities_misc_cost_per_person": 2200,
+      "category_rates": {
+        "Budget": {
+          "transport_multiplier": 1.0,
+          "accommodation_per_room_night": 3500,
+          "food_multiplier": 1.0,
+          "activities_multiplier": 0.8
+        },
+        "Standard": {
+          "transport_multiplier": 1.3,
+          "accommodation_per_room_night": 6000,
+          "food_multiplier": 1.3,
+          "activities_multiplier": 1.2
+        },
+        "Premium": {
+          "transport_multiplier": 2.0,
+          "accommodation_per_room_night": 14000,
+          "food_multiplier": 2.0,
+          "activities_multiplier": 1.9
+        }
+      },
+      "highlights": [
+        "Faisal Mosque iconic architectural marvel",
+        "Daman-e-Koh & Monal Margalla Hills views",
+        "Lok Virsa Museum cultural heritage",
+        "Pakistan Monument & Heritage Museum"
+      ]
+    }
+  ]
+}
