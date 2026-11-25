@@ -3,880 +3,587 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Life Planner — Professional Dashboard & Simulation</title>
+  <title>Smart Life Planner</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #0B0F17;
-      color: #E2E8F0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #FAFAFA;
+      color: #111827;
     }
-    .font-mono {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    /* Custom scrollbar */
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #0F172A; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #475569; }
-
-    /* Glassmorphism surfaces */
-    .surface-panel {
-      background: #111827;
-      border: 1px solid #1F2937;
-    }
-    .surface-card {
-      background: #162032;
-      border: 1px solid #243247;
-    }
-    .input-field {
-      background: #0D1524;
-      border: 1px solid #2A3950;
-      color: #F8FAFC;
-      transition: all 0.15s ease-in-out;
-    }
-    .input-field:focus {
-      border-color: #10B981;
+    input, select {
+      border: 1px solid #D1D5DB;
+      background-color: #FFFFFF;
+      color: #111827;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 14px;
+      width: 100%;
       outline: none;
-      box-shadow: 0 0 0 1px #10B981;
+      transition: border-color 0.15s ease;
+    }
+    input:focus, select:focus {
+      border-color: #111827;
+    }
+    .badge-ok {
+      background-color: #ECFDF5;
+      color: #065F46;
+      border: 1px solid #A7F3D0;
+    }
+    .badge-over {
+      background-color: #FEF2F2;
+      color: #991B1B;
+      border: 1px solid #FECACA;
+    }
+    .badge-neutral {
+      background-color: #F3F4F6;
+      color: #374151;
+      border: 1px solid #E5E7EB;
     }
   </style>
 </head>
-<body class="min-h-screen antialiased flex flex-col">
+<body class="min-h-screen">
 
-  <!-- Top Navigation Bar -->
-  <header class="border-b border-gray-800 bg-[#0B1120]/90 backdrop-blur sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      
-      <!-- Logo & Brand -->
-      <div class="flex items-center space-x-3">
-        <div class="w-9 h-9 rounded-lg bg-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-900/40">
-          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="flex items-center space-x-2">
-            <span class="text-base font-extrabold tracking-tight text-white">Smart Life Planner</span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/80 font-semibold">v1.0 Core</span>
-          </div>
-          <p class="text-[11px] text-gray-400">Pakistan Domestic Travel & Financial Management System</p>
-        </div>
+  <!-- Header -->
+  <header class="bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+      <div>
+        <h1 class="text-xl font-bold tracking-tight text-gray-900">Smart Life Planner</h1>
+        <p class="text-xs text-gray-500">Pakistan Trip Planner &amp; Monthly Budget Manager</p>
       </div>
-
-      <!-- Developer Credentials & GitHub -->
-      <div class="flex items-center space-x-4">
-        <div class="hidden md:flex flex-col text-right text-xs">
-          <span class="font-bold text-gray-200">Muhammad Ali Ajaz</span>
-          <span class="text-gray-400 text-[11px] font-mono">chaudharyaliajaz@gmail.com</span>
-        </div>
-        <a href="https://github.com/muhammadaliajaz" target="_blank" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-900 text-gray-300 hover:text-white hover:border-gray-500 transition text-xs font-medium">
-          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span class="font-mono">@muhammadaliajaz</span>
-        </a>
+      <div class="text-left sm:text-right text-xs text-gray-500">
+        <span class="font-medium text-gray-900">Muhammad Ali Ajaz</span>
+        <span class="mx-1">&bull;</span>
+        <a href="https://github.com/muhammadaliajaz" target="_blank" class="text-gray-600 hover:text-black">@muhammadaliajaz</a>
+        <span class="mx-1">&bull;</span>
+        <span>chaudharyaliajaz@gmail.com</span>
       </div>
-
     </div>
   </header>
 
-  <!-- Module Selector Ribbon -->
-  <div class="border-b border-gray-800 bg-[#0E1526]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex space-x-6 text-xs font-semibold" aria-label="Tabs">
-        <button id="nav-trip" onclick="switchView('trip')" class="py-3.5 border-b-2 border-emerald-500 text-emerald-400 flex items-center space-x-2 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>Pakistan Trip Planner</span>
-        </button>
-        <button id="nav-budget" onclick="switchView('budget')" class="py-3.5 border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center space-x-2 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span>Monthly Budget Manager</span>
-        </button>
-        <button id="nav-cli" onclick="switchView('cli')" class="py-3.5 border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center space-x-2 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          <span>CLI Terminal Session</span>
-        </button>
-        <button id="nav-pdf" onclick="switchView('pdf')" class="py-3.5 border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center space-x-2 transition">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <span>ReportLab PDF Specimen</span>
-        </button>
-      </nav>
+  <!-- Navigation Tabs -->
+  <div class="max-w-5xl mx-auto px-6 mt-6">
+    <div class="flex border-b border-gray-200 gap-6 text-sm">
+      <button id="tab-trip-btn" onclick="switchTab('trip')" class="pb-3 border-b-2 border-black font-semibold text-black transition">
+        Trip Planner
+      </button>
+      <button id="tab-budget-btn" onclick="switchTab('budget')" class="pb-3 border-b-2 border-transparent font-medium text-gray-500 hover:text-black transition">
+        Monthly Budget
+      </button>
+      <button id="tab-pdf-btn" onclick="switchTab('pdf')" class="pb-3 border-b-2 border-transparent font-medium text-gray-500 hover:text-black transition">
+        PDF Report Specimen
+      </button>
     </div>
   </div>
 
-  <!-- Primary Workspace Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+  <!-- Main Container -->
+  <main class="max-w-5xl mx-auto px-6 py-6">
 
-    <!-- ==================== VIEW 1: PAKISTAN TRIP PLANNER ==================== -->
-    <div id="view-trip" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <!-- 1. TRIP PLANNER VIEW -->
+    <div id="view-trip" class="grid grid-cols-1 md:grid-cols-12 gap-8">
       
-      <!-- Parameters Configuration Panel (5 cols) -->
-      <section class="lg:col-span-5 space-y-6">
-        <div class="surface-panel p-6 rounded-2xl shadow-xl">
-          <div class="flex items-center justify-between pb-4 border-b border-gray-800">
-            <div>
-              <h2 class="text-sm font-bold uppercase tracking-wider text-white">Trip Input Parameters</h2>
-              <p class="text-xs text-gray-400">Deterministic costing &amp; optimization inputs</p>
-            </div>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800">Module 01</span>
-          </div>
+      <!-- Left: Form Controls (5 cols) -->
+      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+        <h2 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Trip Inputs</h2>
 
-          <div class="space-y-4 pt-4">
-            
-            <!-- Budget -->
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1">Available Budget (PKR)</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-mono text-gray-500">PKR</span>
-                <input type="number" id="t-budget" value="75000" min="1000" step="5000" oninput="recomputeTrip()" class="input-field w-full pl-12 pr-4 py-2.5 rounded-xl text-sm font-mono font-bold">
-              </div>
-            </div>
-
-            <!-- Travellers & Departure City -->
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs font-semibold text-gray-300 mb-1">Travellers</label>
-                <input type="number" id="t-travellers" value="2" min="1" max="50" oninput="recomputeTrip()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm font-mono">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-gray-300 mb-1">Departure City</label>
-                <input type="text" id="t-dep-city" value="Islamabad" oninput="recomputeTrip()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm">
-              </div>
-            </div>
-
-            <!-- Days & Nights -->
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <label class="text-xs font-semibold text-gray-300">Days</label>
-                  <span class="text-[10px] text-gray-500">Duration</span>
-                </div>
-                <input type="number" id="t-days" value="3" min="1" max="30" oninput="syncDaysNights()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm font-mono">
-              </div>
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <label class="text-xs font-semibold text-gray-300">Nights</label>
-                  <span class="text-[10px] text-gray-500">0 = Day Excursion</span>
-                </div>
-                <input type="number" id="t-nights" value="2" min="0" max="30" oninput="recomputeTrip()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm font-mono">
-              </div>
-            </div>
-
-            <!-- Destination Selection -->
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1">Destination Target</label>
-              <select id="t-dest" onchange="recomputeTrip()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm">
-                <optgroup label="Mountains">
-                  <option value="Murree">Murree (Punjab — 2,291m altitude)</option>
-                  <option value="Nathiagali">Nathiagali (Khyber Pakhtunkhwa — Galyat)</option>
-                  <option value="Hunza" selected>Hunza Valley (Gilgit-Baltistan — Karakoram)</option>
-                </optgroup>
-                <optgroup label="Lakes & Nature">
-                  <option value="Swat">Swat Valley (KP — Fizagat &amp; Malam Jabba)</option>
-                  <option value="Kalam">Kalam (Upper Swat — Mahodand Lake)</option>
-                  <option value="Skardu">Skardu (Baltistan — Deosai &amp; Shangrila)</option>
-                  <option value="Naran">Naran (Kaghan Valley — Saiful Muluk)</option>
-                </optgroup>
-                <optgroup label="Historical Places">
-                  <option value="Lahore">Lahore (Punjab — Mughal Heritage &amp; Food St)</option>
-                  <option value="Islamabad">Islamabad (Federal Capital — Margalla)</option>
-                </optgroup>
-              </select>
-            </div>
-
-            <!-- Travel Tier -->
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Travel &amp; Lodging Tier</label>
-              <div class="grid grid-cols-3 gap-2 text-xs">
-                <button type="button" onclick="setTier('Budget')" id="btn-tier-budget" class="py-2.5 px-3 rounded-xl border border-gray-700 bg-gray-900/60 text-gray-300 text-center font-medium hover:border-gray-500 transition">
-                  <div class="font-bold">Budget</div>
-                  <div class="text-[10px] text-gray-400">Economy</div>
-                </button>
-                <button type="button" onclick="setTier('Standard')" id="btn-tier-standard" class="py-2.5 px-3 rounded-xl border border-emerald-500 bg-emerald-950/40 text-emerald-300 text-center font-bold transition">
-                  <div>Standard</div>
-                  <div class="text-[10px] text-emerald-400/80">Executive</div>
-                </button>
-                <button type="button" onclick="setTier('Premium')" id="btn-tier-premium" class="py-2.5 px-3 rounded-xl border border-gray-700 bg-gray-900/60 text-gray-300 text-center font-medium hover:border-gray-500 transition">
-                  <div class="font-bold">Premium</div>
-                  <div class="text-[10px] text-gray-400">Luxury 4x4</div>
-                </button>
-              </div>
-            </div>
-
-            <!-- Emergency Allowance Selector -->
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-xs font-semibold text-gray-300">Contingency / Emergency Buffer</label>
-                <span id="label-em-pct" class="text-xs font-mono text-emerald-400 font-bold">10%</span>
-              </div>
-              <input type="range" id="t-em-range" min="0" max="20" step="5" value="10" oninput="updateEmPct(this.value)" class="w-full accent-emerald-500 bg-gray-700 rounded-lg h-1.5 cursor-pointer">
-            </div>
-
-          </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Available Budget (PKR)</label>
+          <input type="number" id="t-budget" value="75000" min="1000" step="5000" oninput="calculateTrip()">
         </div>
 
-        <!-- Cost Assumption Technical Specs -->
-        <div class="surface-card p-4 rounded-xl text-xs space-y-1.5 text-gray-400">
-          <div class="font-bold text-gray-300 flex items-center space-x-1.5 mb-1">
-            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Calculation Rules &amp; Assumptions</span>
-          </div>
-          <p>&bull; Room Count: Computed using ceiling division <code class="text-emerald-400 font-mono">ceil(travellers / 2)</code>.</p>
-          <p>&bull; Accommodation Cost: <code class="text-emerald-400 font-mono">room_rate × rooms × nights</code>. Zero nights strictly costs PKR 0.</p>
-          <p>&bull; Pricing Basis: Regional seasonal baseline estimates stored in <code class="font-mono text-gray-300">destinations.json</code>.</p>
-        </div>
-      </section>
-
-      <!-- Calculations, Feasibility & Itinerary Panel (7 cols) -->
-      <section class="lg:col-span-7 space-y-6">
-        
-        <!-- Executive Feasibility Card -->
-        <div class="surface-panel p-6 rounded-2xl shadow-xl space-y-5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-800 pb-4">
-            <div>
-              <div class="flex items-center space-x-2">
-                <span id="feasibility-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide">
-                  Within Budget
-                </span>
-                <span id="trip-header-tag" class="text-xs font-mono text-gray-400">Hunza &bull; Standard Tier</span>
-              </div>
-              <h3 id="trip-header-title" class="text-xl font-extrabold text-white mt-1">3 Days / 2 Nights Expedition</h3>
-            </div>
-            <div class="sm:text-right">
-              <span class="text-xs text-gray-400 block">Total Estimated Cost</span>
-              <span id="kpi-total-cost" class="text-2xl font-black font-mono text-emerald-400">PKR 0.00</span>
-            </div>
-          </div>
-
-          <!-- 4-Metric Grid -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div class="surface-card p-3 rounded-xl border border-gray-800">
-              <span class="text-gray-400 text-[11px] block">Transportation</span>
-              <span id="cost-trans" class="font-mono font-bold text-gray-200 text-sm mt-0.5 block">PKR 0</span>
-            </div>
-            <div class="surface-card p-3 rounded-xl border border-gray-800">
-              <span class="text-gray-400 text-[11px] block">Accommodation</span>
-              <span id="cost-accom" class="font-mono font-bold text-gray-200 text-sm mt-0.5 block">PKR 0</span>
-            </div>
-            <div class="surface-card p-3 rounded-xl border border-gray-800">
-              <span class="text-gray-400 text-[11px] block">Food &amp; Dining</span>
-              <span id="cost-food" class="font-mono font-bold text-gray-200 text-sm mt-0.5 block">PKR 0</span>
-            </div>
-            <div class="surface-card p-3 rounded-xl border border-gray-800">
-              <span class="text-gray-400 text-[11px] block">Activities &amp; Misc</span>
-              <span id="cost-act" class="font-mono font-bold text-gray-200 text-sm mt-0.5 block">PKR 0</span>
-            </div>
-          </div>
-
-          <!-- Cost Distribution Stack Bar -->
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <div class="flex justify-between text-[11px] text-gray-400 mb-1.5">
-              <span>Cost Allocation Breakdown</span>
-              <span id="subtotal-label" class="font-mono text-gray-300">Subtotal: PKR 0.00</span>
-            </div>
-            <div class="h-2.5 w-full bg-gray-800 rounded-full overflow-hidden flex">
-              <div id="bar-trans" class="bg-blue-500 h-full" style="width: 30%"></div>
-              <div id="bar-accom" class="bg-indigo-500 h-full" style="width: 30%"></div>
-              <div id="bar-food" class="bg-emerald-500 h-full" style="width: 25%"></div>
-              <div id="bar-act" class="bg-amber-500 h-full" style="width: 15%"></div>
-            </div>
-            <div class="flex items-center space-x-4 text-[10px] text-gray-400 mt-2">
-              <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 inline-block mr-1"></span> Transport</span>
-              <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-indigo-500 inline-block mr-1"></span> Lodging</span>
-              <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-1"></span> Food</span>
-              <span class="flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block mr-1"></span> Activities</span>
-            </div>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Travellers</label>
+            <input type="number" id="t-travellers" value="2" min="1" max="50" oninput="calculateTrip()">
           </div>
-
-          <!-- Bottom Financial Row -->
-          <div class="grid grid-cols-3 gap-3 border-t border-gray-800 pt-4 text-xs">
-            <div>
-              <span class="text-gray-400 block text-[11px]">Cost Per Person</span>
-              <span id="kpi-per-person" class="font-mono font-bold text-gray-200 text-sm">PKR 0.00</span>
-            </div>
-            <div>
-              <span class="text-gray-400 block text-[11px]">Room Allocation</span>
-              <span id="kpi-rooms" class="font-bold text-gray-200 text-sm">1 Room(s)</span>
-            </div>
-            <div>
-              <span id="kpi-diff-label" class="text-gray-400 block text-[11px]">Remaining Balance</span>
-              <span id="kpi-diff-val" class="font-mono font-bold text-sm text-emerald-400">PKR 0.00</span>
-            </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Departure City</label>
+            <input type="text" id="t-dep-city" value="Islamabad" oninput="calculateTrip()">
           </div>
         </div>
 
-        <!-- Intelligent Optimization Box (Dynamically Rendered When Over Budget) -->
-        <div id="opt-container" class="surface-panel p-6 rounded-2xl border-l-4 border-l-amber-500 hidden space-y-4">
-          <div class="flex items-center space-x-2 text-amber-400 font-bold text-sm">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Intelligent Feasibility Optimizer (Over-Budget Alternative Engine)</span>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Days</label>
+            <input type="number" id="t-days" value="3" min="1" max="30" oninput="handleDaysChange()">
           </div>
-          <p id="opt-diagnostic" class="text-xs text-gray-300 leading-relaxed"></p>
-
-          <div class="space-y-2.5 text-xs" id="opt-cards-list">
-            <!-- Dynamically populated alternatives -->
+          <div>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Nights (0 = Day Trip)</label>
+            <input type="number" id="t-nights" value="2" min="0" max="30" oninput="calculateTrip()">
           </div>
         </div>
 
-        <!-- Day-Wise Dynamic Itinerary -->
-        <div class="surface-panel p-6 rounded-2xl shadow-xl space-y-4">
-          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-            <h3 class="text-sm font-bold text-white flex items-center space-x-2">
-              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span>Day-Wise Travel Schedule</span>
-            </h3>
-            <span class="text-[11px] font-mono text-gray-400" id="itin-days-count">3 Days Total</span>
-          </div>
-
-          <div id="itin-timeline" class="space-y-3 text-xs">
-            <!-- Populated via script -->
-          </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Destination</label>
+          <select id="t-dest" onchange="calculateTrip()">
+            <option value="Murree">Murree (Mountains)</option>
+            <option value="Nathiagali">Nathiagali (Mountains)</option>
+            <option value="Swat">Swat Valley (Lakes &amp; Nature)</option>
+            <option value="Kalam">Kalam (Lakes &amp; Nature)</option>
+            <option value="Hunza" selected>Hunza (Mountains)</option>
+            <option value="Skardu">Skardu (Lakes &amp; Nature)</option>
+            <option value="Naran">Naran (Lakes &amp; Nature)</option>
+            <option value="Lahore">Lahore (Historical Places)</option>
+            <option value="Islamabad">Islamabad (Historical Places)</option>
+          </select>
         </div>
 
-      </section>
-    </div>
-
-    <!-- ==================== VIEW 2: MONTHLY BUDGET MANAGER ==================== -->
-    <div id="view-budget" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- Left Config (4 cols) -->
-      <section class="lg:col-span-4 space-y-6">
-        <div class="surface-panel p-6 rounded-2xl shadow-xl space-y-4">
-          <div class="border-b border-gray-800 pb-3">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-white">Monthly Allocation Setup</h2>
-            <p class="text-xs text-gray-400">Income planning &amp; expense recording</p>
-          </div>
-
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1">Budget Month</label>
-            <input type="text" id="bm-month-input" value="November 2026" class="input-field w-full px-3 py-2.5 rounded-xl text-sm">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1">Total Available Monthly Income (PKR)</label>
-            <input type="number" id="bm-income-input" value="150000" min="5000" step="5000" oninput="recalcBudget()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm font-mono font-bold">
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1">Budget Category Profile</label>
-            <select id="bm-profile-select" onchange="switchBudgetProfile()" class="input-field w-full px-3 py-2.5 rounded-xl text-sm">
-              <option value="home" selected>Home &amp; Kitchen (Household &amp; Utilities)</option>
-              <option value="personal">Personal Finance (Dining, Gym, Lifestyle)</option>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Travel Category</label>
+            <select id="t-category" onchange="calculateTrip()">
+              <option value="Budget">Budget</option>
+              <option value="Standard" selected>Standard</option>
+              <option value="Premium">Premium</option>
             </select>
           </div>
-
-          <!-- Record Transaction Form -->
-          <div class="border-t border-gray-800 pt-4 space-y-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400 block">Record Actual Expense</span>
-            <select id="exp-category" class="input-field w-full px-3 py-2 rounded-xl text-xs"></select>
-            <input type="number" id="exp-val" placeholder="Expense Amount (PKR)" class="input-field w-full px-3 py-2 rounded-xl text-xs font-mono">
-            <input type="text" id="exp-note" placeholder="Description (e.g. Utility bill payment)" class="input-field w-full px-3 py-2 rounded-xl text-xs">
-            <button type="button" onclick="recordExpenseEntry()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-lg shadow-emerald-900/40">
-              + Post Expense Entry
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Right Ledger & Analytics (8 cols) -->
-      <section class="lg:col-span-8 space-y-6">
-        
-        <!-- Summary Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div class="surface-panel p-4 rounded-xl border border-gray-800">
-            <span class="text-gray-400 text-[11px] block">Planned Budget</span>
-            <span id="bm-kpi-planned" class="text-base font-bold font-mono text-gray-200 mt-1 block">PKR 0</span>
-          </div>
-          <div class="surface-panel p-4 rounded-xl border border-gray-800">
-            <span class="text-gray-400 text-[11px] block">Total Actual Spent</span>
-            <span id="bm-kpi-actual" class="text-base font-bold font-mono text-rose-400 mt-1 block">PKR 0</span>
-          </div>
-          <div class="surface-panel p-4 rounded-xl border border-gray-800">
-            <span class="text-gray-400 text-[11px] block">Remaining Balance</span>
-            <span id="bm-kpi-balance" class="text-base font-bold font-mono text-emerald-400 mt-1 block">PKR 0</span>
-          </div>
-          <div class="surface-panel p-4 rounded-xl border border-gray-800">
-            <span class="text-gray-400 text-[11px] block">Net Savings Rate</span>
-            <span id="bm-kpi-savings" class="text-base font-bold font-mono text-blue-400 mt-1 block">0.0%</span>
-          </div>
-        </div>
-
-        <!-- Overspending Alert -->
-        <div id="bm-overspend-alert" class="surface-panel p-4 rounded-xl border-l-4 border-l-rose-500 hidden">
-          <div class="flex items-center space-x-2 text-rose-400 font-bold text-xs">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-            <span>Category Overspending Notification</span>
-          </div>
-          <p id="bm-overspend-desc" class="text-xs text-gray-300 mt-1"></p>
-        </div>
-
-        <!-- Detailed Category Ledger -->
-        <div class="surface-panel p-6 rounded-2xl shadow-xl space-y-4">
-          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-            <h3 class="text-sm font-bold text-white">Category Allocation vs Actual Expenditures</h3>
-            <span class="text-xs text-gray-400 font-mono" id="bm-category-count">5 Categories</span>
-          </div>
-
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr class="border-b border-gray-800 text-gray-400 font-semibold">
-                  <th class="py-2.5 px-3">Category Name</th>
-                  <th class="py-2.5 px-3 text-right">Planned (PKR)</th>
-                  <th class="py-2.5 px-3 text-right">Actual Spent</th>
-                  <th class="py-2.5 px-3 text-right">Difference</th>
-                  <th class="py-2.5 px-3 text-center">Status</th>
-                </tr>
-              </thead>
-              <tbody id="bm-table-body" class="divide-y divide-gray-800/60 font-mono">
-                <!-- Dynamically populated -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </section>
-    </div>
-
-    <!-- ==================== VIEW 3: CLI TERMINAL SESSION ==================== -->
-    <div id="view-cli" class="hidden max-w-4xl mx-auto space-y-4">
-      <div class="bg-[#030712] border border-gray-800 rounded-2xl shadow-2xl overflow-hidden font-mono text-xs">
-        
-        <!-- Terminal Header -->
-        <div class="bg-[#0B1120] px-4 py-3 border-b border-gray-800 flex items-center justify-between">
-          <div class="flex items-center space-x-2">
-            <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-            <span class="text-gray-400 text-[11px] ml-2">powershell — python main.py</span>
-          </div>
-          <span class="text-[11px] text-gray-500">Python 3.10+ Active Session</span>
-        </div>
-
-        <!-- Terminal Output Body -->
-        <div class="p-6 text-gray-300 space-y-3 leading-relaxed">
-          <p class="text-emerald-400 font-bold">PS C:\Users\aliaj\Documents\python-smart-life-planner&gt; python main.py</p>
-          <pre class="text-gray-400">
-=================================================================
-                       SMART LIFE PLANNER                        
-          Pakistan Trip Planner &amp; Monthly Budget Manager         
-=================================================================
-  1. Pakistan Trip Planner
-  2. Monthly Budget Manager
-  3. View Previous PDF Reports
-  4. Developer Information
-  5. Exit
-=================================================================
-Select an option (1-5): 1</pre>
-          <pre class="text-emerald-300">
-============================================================
-  SMART LIFE PLANNER - PAKISTAN TRIP PLAN
-============================================================
-Plan ID:          TRIP-20261125-61BB1F
-Destination:      Hunza Valley (Mountains)
-Travellers:       2 person(s)
-Duration:         4 Days / 3 Nights
-Travel Category:  Standard
-Required Rooms:   1 Room(s)
-------------------------------------------------------------
-FINANCIAL BREAKDOWN (Estimated):
-  Transportation:              PKR 33,600.00
-  Accommodation:               PKR 27,000.00
-  Food &amp; Dining:               PKR 29,120.00
-  Activities &amp; Misc:           PKR 10,800.00
-  Subtotal:                   PKR 100,520.00
-  Emergency (10%):             PKR 10,052.00
-  --------------------------------------------------
-  TOTAL ESTIMATED COST:       PKR 110,572.00
-  Cost Per Person:             PKR 55,286.00
-  Available Budget:           PKR 100,000.00
-  Shortage (if any):           PKR 10,572.00
-  Feasibility:                 Over Budget
-============================================================</pre>
-          <p class="text-gray-500">&gt;&gt; Confirmed plan persisted to data/trips.json</p>
-          <p class="text-emerald-400">&gt;&gt; PDF generated: reports/Trip_Report_Hunza_20261125_183155_0697.pdf</p>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ==================== VIEW 4: REPORTLAB PDF SPECIMEN ==================== -->
-    <div id="view-pdf" class="hidden max-w-3xl mx-auto">
-      <!-- White Paper Sheet Emulation -->
-      <div class="bg-white text-gray-900 rounded-xl shadow-2xl p-8 sm:p-12 border border-gray-300 font-sans space-y-6 text-xs">
-        
-        <!-- Header -->
-        <div class="border-b-2 border-[#0E6655] pb-4 flex justify-between items-start">
           <div>
-            <h1 class="text-2xl font-black text-[#0E6655] tracking-tight">Smart Life Planner</h1>
-            <h2 class="text-xs font-bold text-[#1B4F72] mt-0.5">Pakistan Trip Plan &amp; Cost Feasibility Report</h2>
-            <p class="text-[10px] text-gray-500 mt-1">Official Document &bull; Generated via ReportLab Engine</p>
-          </div>
-          <div class="text-right text-[11px] font-mono text-gray-600">
-            <p><b>Report ID:</b> TRIP-20261125-61BB1F</p>
-            <p><b>Date:</b> November 25, 2026</p>
-            <p><b>Status:</b> <span class="text-emerald-700 font-bold">CONFIRMED</span></p>
+            <label class="block text-xs font-medium text-gray-700 mb-1">Emergency Buffer</label>
+            <select id="t-emergency" onchange="calculateTrip()">
+              <option value="5">5%</option>
+              <option value="10" selected>10%</option>
+              <option value="15">15%</option>
+            </select>
           </div>
         </div>
 
-        <!-- 1. Metadata Block -->
-        <div>
-          <h3 class="text-xs font-bold text-[#154360] uppercase tracking-wider mb-2">1. Trip Parameters &amp; Preferences</h3>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-50 p-3 rounded border border-gray-200 text-[11px]">
-            <div><span class="text-gray-500 block">Destination:</span> <b>Hunza (Mountains)</b></div>
-            <div><span class="text-gray-500 block">Departure City:</span> <b>Islamabad</b></div>
-            <div><span class="text-gray-500 block">Duration:</span> <b>4 Days / 3 Nights</b></div>
-            <div><span class="text-gray-500 block">Travellers:</span> <b>2 Persons (1 Room)</b></div>
-          </div>
+        <div class="text-[11px] text-gray-500 bg-gray-50 p-3 rounded border border-gray-100">
+          Rooms: <span class="font-mono">ceil(travellers / 2)</span>. 0 nights has PKR 0 lodging cost.
         </div>
+      </div>
 
-        <!-- 2. Financial Breakdown -->
-        <div>
-          <h3 class="text-xs font-bold text-[#154360] uppercase tracking-wider mb-2">2. Itemized Financial Breakdown (PKR)</h3>
-          <table class="w-full border border-gray-200 text-[11px]">
-            <thead class="bg-[#1B4F72] text-white">
+      <!-- Right: Summary & Results (7 cols) -->
+      <div class="md:col-span-7 space-y-4">
+        
+        <!-- Result Summary -->
+        <div class="bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+          <div class="flex justify-between items-start border-b border-gray-100 pb-3">
+            <div>
+              <span id="feasibility-badge" class="px-2 py-0.5 rounded text-[11px] font-semibold badge-ok">
+                Within Budget
+              </span>
+              <h3 id="trip-title" class="text-base font-bold text-gray-900 mt-1">Hunza (3 Days / 2 Nights)</h3>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-gray-500 block">Total Estimated Cost</span>
+              <span id="kpi-total" class="text-xl font-bold font-mono text-gray-900">PKR 0.00</span>
+            </div>
+          </div>
+
+          <!-- Breakdown Table -->
+          <table class="w-full text-xs">
+            <tbody class="divide-y divide-gray-100">
               <tr>
-                <th class="p-2 text-left">Expense Category</th>
-                <th class="p-2 text-left">Calculation Basis</th>
-                <th class="p-2 text-right">Amount (PKR)</th>
+                <td class="py-1.5 text-gray-600">Transportation</td>
+                <td id="cost-trans" class="py-1.5 text-right font-mono font-medium text-gray-900">PKR 0.00</td>
               </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr><td class="p-2">Transportation</td><td class="p-2">2 travellers × PKR 16,800</td><td class="p-2 text-right font-mono">33,600.00</td></tr>
-              <tr><td class="p-2">Accommodation</td><td class="p-2">1 room × 3 nights × PKR 9,000</td><td class="p-2 text-right font-mono">27,000.00</td></tr>
-              <tr><td class="p-2">Food &amp; Dining</td><td class="p-2">2 travellers × 4 days × PKR 3,640</td><td class="p-2 text-right font-mono">29,120.00</td></tr>
-              <tr><td class="p-2">Activities &amp; Misc</td><td class="p-2">2 travellers × PKR 5,400</td><td class="p-2 text-right font-mono">10,800.00</td></tr>
-              <tr class="bg-gray-100 font-bold"><td class="p-2">Subtotal Expenses</td><td class="p-2">Direct trip costs</td><td class="p-2 text-right font-mono">100,520.00</td></tr>
-              <tr><td class="p-2">Emergency Contingency (10%)</td><td class="p-2">Unforeseen reserves</td><td class="p-2 text-right font-mono">10,052.00</td></tr>
-              <tr class="bg-emerald-50 text-emerald-950 font-bold text-xs"><td class="p-2">TOTAL ESTIMATED TRIP COST</td><td class="p-2">Subtotal + Contingency</td><td class="p-2 text-right font-mono">PKR 110,572.00</td></tr>
+              <tr>
+                <td class="py-1.5 text-gray-600">Accommodation</td>
+                <td id="cost-accom" class="py-1.5 text-right font-mono font-medium text-gray-900">PKR 0.00</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 text-gray-600">Food &amp; Dining</td>
+                <td id="cost-food" class="py-1.5 text-right font-mono font-medium text-gray-900">PKR 0.00</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 text-gray-600">Activities &amp; Misc</td>
+                <td id="cost-act" class="py-1.5 text-right font-mono font-medium text-gray-900">PKR 0.00</td>
+              </tr>
+              <tr>
+                <td class="py-1.5 text-gray-600">Emergency Buffer</td>
+                <td id="cost-emergency" class="py-1.5 text-right font-mono font-medium text-gray-900">PKR 0.00</td>
+              </tr>
+              <tr class="border-t border-gray-200 font-semibold">
+                <td class="py-2 text-gray-900">Cost Per Person</td>
+                <td id="kpi-per-person" class="py-2 text-right font-mono text-gray-900">PKR 0.00</td>
+              </tr>
+              <tr class="font-semibold">
+                <td id="kpi-diff-label" class="py-1 text-gray-900">Remaining Balance</td>
+                <td id="kpi-diff-val" class="py-1 text-right font-mono text-emerald-700">PKR 0.00</td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- 3. Dynamic Footer Proof -->
-        <div class="pt-8 mt-12 border-t border-gray-300 flex flex-col sm:flex-row justify-between text-[10px] text-gray-500 font-mono">
-          <span>Smart Life Planner | Developer: Muhammad Ali Ajaz | GitHub: @muhammadaliajaz | Email: chaudharyaliajaz@gmail.com</span>
-          <span class="sm:text-right">Page 1 of 2</span>
+        <!-- Over-Budget Alternatives (Shown only when over budget) -->
+        <div id="opt-box" class="bg-white p-5 rounded-lg border border-amber-200 hidden space-y-2 text-xs">
+          <div class="font-bold text-amber-800">Calculated Alternatives (Over Budget)</div>
+          <p id="opt-text" class="text-gray-600"></p>
+          <div id="opt-list" class="space-y-1.5 pt-1"></div>
         </div>
 
+        <!-- Day-Wise Itinerary -->
+        <div class="bg-white p-5 rounded-lg border border-gray-200 space-y-2 text-xs">
+          <div class="font-bold text-gray-900 pb-1 border-b border-gray-100">Day-Wise Itinerary</div>
+          <div id="itin-list" class="space-y-2 pt-1"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 2. MONTHLY BUDGET VIEW -->
+    <div id="view-budget" class="hidden grid grid-cols-1 md:grid-cols-12 gap-8">
+      
+      <!-- Left: Form -->
+      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+        <h2 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Budget Setup</h2>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Month</label>
+          <input type="text" id="bm-month" value="November 2026">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Total Available Income (PKR)</label>
+          <input type="number" id="bm-income" value="150000" min="5000" step="5000" oninput="recalcBudget()">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Budget Type</label>
+          <select id="bm-type" onchange="changeBudgetType()">
+            <option value="home" selected>Home &amp; Kitchen</option>
+            <option value="personal">Personal Finance</option>
+          </select>
+        </div>
+
+        <div class="border-t border-gray-100 pt-3 space-y-2">
+          <div class="text-xs font-semibold text-gray-900">Record Expense</div>
+          <select id="exp-cat"></select>
+          <input type="number" id="exp-amt" placeholder="Amount (PKR)">
+          <input type="text" id="exp-desc" placeholder="Description">
+          <button type="button" onclick="addExpense()" class="w-full bg-black text-white text-xs font-medium py-2 rounded hover:bg-gray-800 transition">
+            Add Expense
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Summary & Table -->
+      <div class="md:col-span-7 space-y-4">
+        
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="bg-white p-3 rounded-lg border border-gray-200">
+            <span class="text-gray-500 block">Total Planned</span>
+            <span id="bm-kpi-planned" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+          </div>
+          <div class="bg-white p-3 rounded-lg border border-gray-200">
+            <span class="text-gray-500 block">Total Actual</span>
+            <span id="bm-kpi-actual" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+          </div>
+          <div class="bg-white p-3 rounded-lg border border-gray-200">
+            <span class="text-gray-500 block">Remaining</span>
+            <span id="bm-kpi-balance" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+          </div>
+          <div class="bg-white p-3 rounded-lg border border-gray-200">
+            <span class="text-gray-500 block">Savings Rate</span>
+            <span id="bm-kpi-savings" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">0%</span>
+          </div>
+        </div>
+
+        <!-- Overspending Banner -->
+        <div id="bm-overspend-box" class="bg-red-50 border border-red-200 p-3 rounded-lg text-xs text-red-800 hidden">
+          <span class="font-bold">Overspending Alert:</span> <span id="bm-overspend-text"></span>
+        </div>
+
+        <!-- Category Table -->
+        <div class="bg-white p-5 rounded-lg border border-gray-200 space-y-3">
+          <div class="text-xs font-bold text-gray-900">Category Breakdown</div>
+          <table class="w-full text-xs">
+            <thead>
+              <tr class="border-b border-gray-200 text-gray-500 text-left">
+                <th class="pb-2">Category</th>
+                <th class="pb-2 text-right">Planned</th>
+                <th class="pb-2 text-right">Actual</th>
+                <th class="pb-2 text-right">Diff</th>
+                <th class="pb-2 text-center">Status</th>
+              </tr>
+            </thead>
+            <tbody id="bm-table-body" class="divide-y divide-gray-100 font-mono"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 3. PDF REPORT SPECIMEN -->
+    <div id="view-pdf" class="hidden max-w-2xl mx-auto bg-white p-8 rounded-lg border border-gray-300 shadow-sm text-xs space-y-6">
+      <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
+        <div>
+          <h2 class="text-lg font-bold text-gray-900">Smart Life Planner</h2>
+          <p class="text-gray-500 text-[11px]">Pakistan Trip Plan &amp; Cost Feasibility Report</p>
+        </div>
+        <div class="text-right text-[11px] font-mono text-gray-500">
+          <p>Report ID: TRIP-20261125-61BB1F</p>
+          <p>Status: <span class="text-emerald-700 font-bold">CONFIRMED</span></p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-50 p-3 rounded border border-gray-200 text-[11px]">
+        <div><span class="text-gray-400 block">Destination</span><b>Hunza (Mountains)</b></div>
+        <div><span class="text-gray-400 block">Departure</span><b>Islamabad</b></div>
+        <div><span class="text-gray-400 block">Duration</span><b>4 Days / 3 Nights</b></div>
+        <div><span class="text-gray-400 block">Travellers</span><b>2 Persons</b></div>
+      </div>
+
+      <table class="w-full border border-gray-200 text-[11px]">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr><th class="p-2 text-left">Category</th><th class="p-2 text-right">Amount (PKR)</th></tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 font-mono">
+          <tr><td class="p-2">Transportation</td><td class="p-2 text-right">33,600.00</td></tr>
+          <tr><td class="p-2">Accommodation</td><td class="p-2 text-right">27,000.00</td></tr>
+          <tr><td class="p-2">Food &amp; Dining</td><td class="p-2 text-right">29,120.00</td></tr>
+          <tr><td class="p-2">Activities &amp; Misc</td><td class="p-2 text-right">10,800.00</td></tr>
+          <tr><td class="p-2">Emergency (10%)</td><td class="p-2 text-right">10,052.00</td></tr>
+          <tr class="bg-gray-50 font-bold"><td class="p-2">Total Estimated Cost</td><td class="p-2 text-right">PKR 110,572.00</td></tr>
+        </tbody>
+      </table>
+
+      <div class="pt-6 border-t border-gray-200 flex justify-between text-[10px] text-gray-400 font-mono">
+        <span>Smart Life Planner | Developer: Muhammad Ali Ajaz | GitHub: @muhammadaliajaz | Email: chaudharyaliajaz@gmail.com</span>
+        <span>Page 1 of 2</span>
       </div>
     </div>
 
   </main>
 
-  <!-- Interactive JavaScript Logic Engine -->
+  <!-- Script Engine -->
   <script>
-    // Destination Database
     const destinations = {
-      "Murree": { trans: 3000, room: 4500, food: 2000, act: 2500, highlights: ["Mall Road & Kashmir Point", "Patriata Chairlift & Cable Car", "Pindi Point Sunset"] },
-      "Nathiagali": { trans: 3500, room: 5000, food: 2200, act: 2500, highlights: ["Mukshpuri Peak Alpine Hike", "Governor House Pine Track", "Ayubia Pipeline Walk"] },
-      "Swat": { trans: 5000, room: 4500, food: 2200, act: 3000, highlights: ["Fizagat Riverfront Park", "Malam Jabba Ski Resort", "White Palace Marghazar"] },
-      "Kalam": { trans: 6500, room: 5000, food: 2400, act: 3500, highlights: ["Mahodand Lake 4x4 Safari", "Ushu Cedar Forest Hike", "Matiltan Waterfall View"] },
-      "Hunza": { trans: 12000, room: 6500, food: 2800, act: 4500, highlights: ["Baltit & Altit Historic Forts", "Attabad Lake Boating & Jetski", "Passu Cones & Glacier View"] },
-      "Skardu": { trans: 14000, room: 7000, food: 3000, act: 5000, highlights: ["Shangrila & Lower Kachura", "Sarfaranga Cold Desert Safari", "Deosai National Park Tour"] },
-      "Naran": { trans: 6000, room: 5000, food: 2400, act: 3500, highlights: ["Lake Saiful Muluk Jeep Excursion", "Babusar High Pass Viewpoint", "Kunhar River Rafting"] },
-      "Lahore": { trans: 3500, room: 4000, food: 2500, act: 2000, highlights: ["Lahore Fort & Badshahi Mosque", "Walled City Heritage Walk", "Shalimar Mughal Gardens"] },
-      "Islamabad": { trans: 3000, room: 4500, food: 2500, act: 2200, highlights: ["Faisal Mosque Architecture", "Daman-e-Koh Margalla View", "Pakistan Monument Museum"] }
+      "Murree": { trans: 3000, room: 4500, food: 2000, act: 2500, highlights: ["Mall Road", "Patriata Chairlift", "Pindi Point"] },
+      "Nathiagali": { trans: 3500, room: 5000, food: 2200, act: 2500, highlights: ["Mukshpuri Peak trek", "Governor House Pine Track", "Pipeline Walk"] },
+      "Swat": { trans: 5000, room: 4500, food: 2200, act: 3000, highlights: ["Fizagat Park", "Malam Jabba Ski Resort", "White Palace"] },
+      "Kalam": { trans: 6500, room: 5000, food: 2400, act: 3500, highlights: ["Mahodand Lake Jeep tour", "Ushu Forest", "Matiltan Waterfall"] },
+      "Hunza": { trans: 12000, room: 6500, food: 2800, act: 4500, highlights: ["Baltit & Altit Forts", "Attabad Lake", "Passu Cones"] },
+      "Skardu": { trans: 14000, room: 7000, food: 3000, act: 5000, highlights: ["Shangrila Resort", "Cold Desert Safari", "Deosai Plains"] },
+      "Naran": { trans: 6000, room: 5000, food: 2400, act: 3500, highlights: ["Lake Saiful Muluk", "Babusar Top", "Kunhar River"] },
+      "Lahore": { trans: 3500, room: 4000, food: 2500, act: 2000, highlights: ["Lahore Fort & Badshahi Mosque", "Walled City", "Shalimar Gardens"] },
+      "Islamabad": { trans: 3000, room: 4500, food: 2500, act: 2200, highlights: ["Faisal Mosque", "Daman-e-Koh", "Pakistan Monument"] }
     };
 
-    const tierMultipliers = {
+    const multipliers = {
       "Budget": { trans: 1.0, room: 0.8, food: 1.0, act: 0.8 },
       "Standard": { trans: 1.4, room: 1.3, food: 1.3, act: 1.2 },
       "Premium": { trans: 2.2, room: 2.2, food: 2.0, act: 2.0 }
     };
 
-    let activeTier = "Standard";
-    let emergencyPct = 10;
-
-    function formatPKR(val) {
-      return "PKR " + Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function formatPKR(n) {
+      return "PKR " + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    function switchView(view) {
-      ['trip', 'budget', 'cli', 'pdf'].forEach(v => {
-        document.getElementById(`view-${v}`).classList.toggle('hidden', v !== view);
-        const btn = document.getElementById(`nav-${v}`);
-        if (v === view) {
-          btn.className = "py-3.5 border-b-2 border-emerald-500 text-emerald-400 flex items-center space-x-2 transition font-bold";
+    function switchTab(t) {
+      ['trip', 'budget', 'pdf'].forEach(name => {
+        document.getElementById(`view-${name}`).classList.toggle('hidden', name !== t);
+        const btn = document.getElementById(`tab-${name}-btn`);
+        if (name === t) {
+          btn.className = "pb-3 border-b-2 border-black font-semibold text-black transition";
         } else {
-          btn.className = "py-3.5 border-b-2 border-transparent text-gray-400 hover:text-gray-200 flex items-center space-x-2 transition font-medium";
+          btn.className = "pb-3 border-b-2 border-transparent font-medium text-gray-500 hover:text-black transition";
         }
       });
     }
 
-    function setTier(tier) {
-      activeTier = tier;
-      ['Budget', 'Standard', 'Premium'].forEach(t => {
-        const btn = document.getElementById(`btn-tier-${t.toLowerCase()}`);
-        if (t === tier) {
-          btn.className = "py-2.5 px-3 rounded-xl border border-emerald-500 bg-emerald-950/40 text-emerald-300 text-center font-bold transition";
-        } else {
-          btn.className = "py-2.5 px-3 rounded-xl border border-gray-700 bg-gray-900/60 text-gray-300 text-center font-medium hover:border-gray-500 transition";
-        }
-      });
-      recomputeTrip();
-    }
-
-    function updateEmPct(val) {
-      emergencyPct = parseInt(val) || 0;
-      document.getElementById('label-em-pct').textContent = `${emergencyPct}%`;
-      recomputeTrip();
-    }
-
-    function syncDaysNights() {
+    function handleDaysChange() {
       const d = parseInt(document.getElementById('t-days').value) || 1;
       const nInput = document.getElementById('t-nights');
       if (parseInt(nInput.value) > d) nInput.value = d;
-      recomputeTrip();
+      calculateTrip();
     }
 
-    function recomputeTrip() {
+    function calculateTrip() {
       const budget = parseFloat(document.getElementById('t-budget').value) || 0;
       const travellers = parseInt(document.getElementById('t-travellers').value) || 1;
       const days = parseInt(document.getElementById('t-days').value) || 1;
       let nights = parseInt(document.getElementById('t-nights').value) || 0;
       if (nights > days) nights = days;
       const destKey = document.getElementById('t-dest').value;
+      const catKey = document.getElementById('t-category').value;
+      const emPct = parseFloat(document.getElementById('t-emergency').value) || 10;
       const depCity = document.getElementById('t-dep-city').value || "Islamabad";
 
       const dest = destinations[destKey] || destinations["Hunza"];
-      const mult = tierMultipliers[activeTier];
+      const mult = multipliers[catKey];
 
-      // Formulations
-      const transCost = dest.trans * mult.trans * travellers;
+      const trans = dest.trans * mult.trans * travellers;
       const rooms = Math.ceil(travellers / 2);
-      const accomCost = (nights === 0) ? 0 : (dest.room * mult.room * rooms * nights);
-      const foodCost = dest.food * mult.food * travellers * days;
-      const actCost = dest.act * mult.act * travellers;
-      const subtotal = transCost + accomCost + foodCost + actCost;
-      const emergency = subtotal * (emergencyPct / 100);
-      const totalCost = subtotal + emergency;
-      const costPerPerson = totalCost / travellers;
+      const accom = (nights === 0) ? 0 : (dest.room * mult.room * rooms * nights);
+      const food = dest.food * mult.food * travellers * days;
+      const act = dest.act * mult.act * travellers;
+      const subtotal = trans + accom + food + act;
+      const emergency = subtotal * (emPct / 100);
+      const total = subtotal + emergency;
+      const perPerson = total / travellers;
 
-      // Update UI displays
-      document.getElementById('cost-trans').textContent = formatPKR(transCost);
-      document.getElementById('cost-accom').textContent = formatPKR(accomCost);
-      document.getElementById('cost-food').textContent = formatPKR(foodCost);
-      document.getElementById('cost-act').textContent = formatPKR(actCost);
-      document.getElementById('kpi-total-cost').textContent = formatPKR(totalCost);
-      document.getElementById('kpi-per-person').textContent = formatPKR(costPerPerson);
-      document.getElementById('kpi-rooms').textContent = `${rooms} Room(s)`;
-      document.getElementById('subtotal-label').textContent = `Subtotal: ${formatPKR(subtotal)}`;
+      document.getElementById('cost-trans').textContent = formatPKR(trans);
+      document.getElementById('cost-accom').textContent = formatPKR(accom);
+      document.getElementById('cost-food').textContent = formatPKR(food);
+      document.getElementById('cost-act').textContent = formatPKR(act);
+      document.getElementById('cost-emergency').textContent = formatPKR(emergency);
+      document.getElementById('kpi-total').textContent = formatPKR(total);
+      document.getElementById('kpi-per-person').textContent = formatPKR(perPerson);
+      document.getElementById('trip-title').textContent = `${destKey} (${days}D / ${nights}N, ${travellers} travellers)`;
 
-      document.getElementById('trip-header-title').textContent = `${days} Days / ${nights} Nights Expedition`;
-      document.getElementById('trip-header-tag').textContent = `${destKey} • ${activeTier} Tier`;
-      document.getElementById('itin-days-count').textContent = `${days} Days Itinerary`;
-
-      // Progress bars
-      if (subtotal > 0) {
-        document.getElementById('bar-trans').style.width = `${(transCost / subtotal) * 100}%`;
-        document.getElementById('bar-accom').style.width = `${(accomCost / subtotal) * 100}%`;
-        document.getElementById('bar-food').style.width = `${(foodCost / subtotal) * 100}%`;
-        document.getElementById('bar-act').style.width = `${(actCost / subtotal) * 100}%`;
-      }
-
-      // Feasibility Classification
       const badge = document.getElementById('feasibility-badge');
       const diffLabel = document.getElementById('kpi-diff-label');
       const diffVal = document.getElementById('kpi-diff-val');
-      const optContainer = document.getElementById('opt-container');
+      const optBox = document.getElementById('opt-box');
 
-      if (Math.abs(budget - totalCost) < 1) {
-        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-blue-950 text-blue-400 border border-blue-800";
+      if (Math.abs(budget - total) < 1) {
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-semibold badge-neutral";
         badge.textContent = "Exactly On Budget";
         diffLabel.textContent = "Remaining Balance";
-        diffVal.className = "font-mono font-bold text-sm text-gray-200";
+        diffVal.className = "py-1 text-right font-mono text-gray-900";
         diffVal.textContent = "PKR 0.00";
-        optContainer.classList.add('hidden');
-      } else if (budget > totalCost) {
-        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-emerald-950 text-emerald-400 border border-emerald-800";
+        optBox.classList.add('hidden');
+      } else if (budget > total) {
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-semibold badge-ok";
         badge.textContent = "Within Budget";
-        diffLabel.textContent = "Budget Surplus";
-        diffVal.className = "font-mono font-bold text-sm text-emerald-400";
-        diffVal.textContent = formatPKR(budget - totalCost);
-        optContainer.classList.add('hidden');
+        diffLabel.textContent = "Remaining Balance";
+        diffVal.className = "py-1 text-right font-mono text-emerald-700";
+        diffVal.textContent = formatPKR(budget - total);
+        optBox.classList.add('hidden');
       } else {
-        const shortage = totalCost - budget;
-        badge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-rose-950 text-rose-400 border border-rose-800";
+        const shortage = total - budget;
+        badge.className = "px-2 py-0.5 rounded text-[11px] font-semibold badge-over";
         badge.textContent = "Over Budget";
-        diffLabel.textContent = "Budget Shortage";
-        diffVal.className = "font-mono font-bold text-sm text-rose-400";
+        diffLabel.textContent = "Shortage";
+        diffVal.className = "py-1 text-right font-mono text-red-700";
         diffVal.textContent = `-${formatPKR(shortage)}`;
 
-        // Optimization engine
-        optContainer.classList.remove('hidden');
-        document.getElementById('opt-diagnostic').textContent = 
-          `The calculated expenditure exceeds your available limit of ${formatPKR(budget)} by ${formatPKR(shortage)}. The intelligent optimizer has evaluated realistic alternatives strictly verified to satisfy your budget:`;
-
-        const optList = document.getElementById('opt-cards-list');
-        optList.innerHTML = `
-          <div class="surface-card p-3 rounded-xl border border-gray-800 flex justify-between items-center">
-            <div>
-              <span class="font-bold text-gray-200 block">Strategy 1: Budget Capital Addition</span>
-              <span class="text-gray-400 text-[11px]">Retain current group &amp; duration by increasing budget by exactly ${formatPKR(shortage)}.</span>
-            </div>
-            <span class="text-xs font-mono font-bold text-amber-400">+${formatPKR(shortage)}</span>
-          </div>
-          <div class="surface-card p-3 rounded-xl border border-gray-800 flex justify-between items-center">
-            <div>
-              <span class="font-bold text-gray-200 block">Strategy 2: Tier Downgrade</span>
-              <span class="text-gray-400 text-[11px]">Switch to Budget tier economy transportation &amp; standard guest rooms.</span>
-            </div>
-            <span class="text-xs font-mono font-bold text-emerald-400">Save ~28%</span>
-          </div>
-          <div class="surface-card p-3 rounded-xl border border-gray-800 flex justify-between items-center">
-            <div>
-              <span class="font-bold text-gray-200 block">Strategy 3: Regional Destination Switch</span>
-              <span class="text-gray-400 text-[11px]">Murree or Lahore fit fully within ${formatPKR(budget)} for ${travellers} travellers.</span>
-            </div>
-            <span class="text-xs font-mono font-bold text-emerald-400">Feasible</span>
-          </div>
+        optBox.classList.remove('hidden');
+        document.getElementById('opt-text').textContent = 
+          `Estimated cost exceeds available budget by ${formatPKR(shortage)}. Feasible alternatives:`;
+        document.getElementById('opt-list').innerHTML = `
+          <div>&bull; <b>Increase Budget:</b> Add <b>${formatPKR(shortage)}</b> to cover this itinerary.</div>
+          <div>&bull; <b>Downgrade Tier:</b> Switch from ${catKey} to <b>Budget Tier</b> for ~25% savings.</div>
+          <div>&bull; <b>Closer Destination:</b> Murree or Lahore fit fully within this budget.</div>
         `;
       }
 
-      // Render Day-Wise Itinerary
-      const timeline = document.getElementById('itin-timeline');
-      timeline.innerHTML = '';
+      // Itinerary
+      const itinList = document.getElementById('itin-list');
+      itinList.innerHTML = '';
       if (days === 1 && nights === 0) {
-        timeline.innerHTML = `
-          <div class="surface-card p-3.5 rounded-xl border-l-2 border-l-emerald-500">
-            <div class="flex justify-between items-center">
-              <span class="font-bold text-gray-200">Day 1: Full-Day Excursion to ${destKey}</span>
-              <span class="text-[10px] text-gray-400 font-mono">0 Nights Stay</span>
-            </div>
-            <p class="text-gray-400 mt-1">Morning departure from ${depCity}. Scenic transit route. Direct visit to ${dest.highlights[0]}. Regional lunch and afternoon exploration. Return travel back to ${depCity} by night.</p>
+        itinList.innerHTML = `
+          <div class="py-1">
+            <b>Day 1:</b> Day excursion from ${depCity} to ${destKey}. Visit ${dest.highlights[0]} and return by evening.
           </div>
         `;
       } else {
         for (let d = 1; d <= days; d++) {
-          const act = dest.highlights[(d - 1) % dest.highlights.length];
-          const isFirst = d === 1;
-          const isLast = d === days;
-          const title = isFirst ? `Day 1: Departure from ${depCity} & Arrival at ${destKey}` : (isLast ? `Day ${d}: Morning Exploration & Return to ${depCity}` : `Day ${d}: Excursion to ${act}`);
-          const desc = isFirst ? `Morning road departure. Check-in to hotel accommodation. Evening walk and orientation tour.` : (isLast ? `Morning checkout, local bazaar shopping for dry fruits/souvenirs, and return highway drive back to ${depCity}.` : `Full-day excursion exploring ${act}. Photography, sightseeing, and traditional regional dinner.`);
-
-          timeline.innerHTML += `
-            <div class="surface-card p-3.5 rounded-xl border-l-2 ${isFirst ? 'border-l-blue-500' : (isLast ? 'border-l-indigo-500' : 'border-l-emerald-500')}">
-              <div class="flex justify-between items-center">
-                <span class="font-bold text-gray-200">${title}</span>
-                <span class="text-[10px] text-gray-500 font-mono">${d <= nights ? 'Overnight Hotel' : 'Transit Home'}</span>
-              </div>
-              <p class="text-gray-400 mt-1">${desc}</p>
+          const actSpot = dest.highlights[(d - 1) % dest.highlights.length];
+          const text = (d === 1) ? `Travel from ${depCity} to ${destKey}, check-in and local walk.` : (d === days ? `Morning checkout and return travel back to ${depCity}.` : `Full-day excursion to ${actSpot}.`);
+          itinList.innerHTML += `
+            <div class="py-0.5 text-gray-700">
+              <span class="font-semibold text-gray-900">Day ${d}:</span> ${text}
             </div>
           `;
         }
       }
     }
 
-    // Module Two: Budget State
-    let budgetCategories = [
-      { name: "Grocery & Provisions", planned: 40000, actual: 38000 },
-      { name: "Electricity & Gas Utilities", planned: 25000, actual: 27000 },
-      { name: "Apartment Rent", planned: 35000, actual: 35000 },
-      { name: "High-Speed Internet", planned: 5000, actual: 4800 },
-      { name: "Medical & Healthcare", planned: 10000, actual: 6000 }
+    // Budget State
+    let budgetItems = [
+      { name: "Grocery", planned: 40000, actual: 38000 },
+      { name: "Electricity", planned: 25000, actual: 27000 },
+      { name: "Rent", planned: 35000, actual: 35000 },
+      { name: "Internet", planned: 5000, actual: 4800 },
+      { name: "Medical", planned: 10000, actual: 6000 }
     ];
 
-    function switchBudgetProfile() {
-      const p = document.getElementById('bm-profile-select').value;
-      if (p === "home") {
-        budgetCategories = [
-          { name: "Grocery & Provisions", planned: 40000, actual: 38000 },
-          { name: "Electricity & Gas Utilities", planned: 25000, actual: 27000 },
-          { name: "Apartment Rent", planned: 35000, actual: 35000 },
-          { name: "High-Speed Internet", planned: 5000, actual: 4800 },
-          { name: "Medical & Healthcare", planned: 10000, actual: 6000 }
+    function changeBudgetType() {
+      const t = document.getElementById('bm-type').value;
+      if (t === 'home') {
+        budgetItems = [
+          { name: "Grocery", planned: 40000, actual: 38000 },
+          { name: "Electricity", planned: 25000, actual: 27000 },
+          { name: "Rent", planned: 35000, actual: 35000 },
+          { name: "Internet", planned: 5000, actual: 4800 },
+          { name: "Medical", planned: 10000, actual: 6000 }
         ];
       } else {
-        budgetCategories = [
-          { name: "Clothing & Retail Shopping", planned: 30000, actual: 32000 },
-          { name: "Gym & Fitness Membership", planned: 8000, actual: 8000 },
-          { name: "Dining Out & Restaurants", planned: 25000, actual: 29000 },
-          { name: "Savings & Investments", planned: 30000, actual: 30000 },
-          { name: "Recreation & Entertainment", planned: 10000, actual: 8500 }
+        budgetItems = [
+          { name: "Shopping", planned: 30000, actual: 32000 },
+          { name: "Gym", planned: 8000, actual: 8000 },
+          { name: "Dining Out", planned: 25000, actual: 29000 },
+          { name: "Savings", planned: 30000, actual: 30000 },
+          { name: "Entertainment", planned: 10000, actual: 8500 }
         ];
       }
-      populateBudgetSelectors();
+      populateCats();
       recalcBudget();
     }
 
-    function populateBudgetSelectors() {
-      const sel = document.getElementById('exp-category');
+    function populateCats() {
+      const sel = document.getElementById('exp-cat');
       sel.innerHTML = '';
-      budgetCategories.forEach(c => {
-        sel.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+      budgetItems.forEach(b => {
+        sel.innerHTML += `<option value="${b.name}">${b.name}</option>`;
       });
-      document.getElementById('bm-category-count').textContent = `${budgetCategories.length} Categories`;
     }
 
-    function recordExpenseEntry() {
-      const cat = document.getElementById('exp-category').value;
-      const amt = parseFloat(document.getElementById('exp-val').value);
+    function addExpense() {
+      const cat = document.getElementById('exp-cat').value;
+      const amt = parseFloat(document.getElementById('exp-amt').value);
       if (!amt || amt <= 0) return;
-
-      const item = budgetCategories.find(c => c.name === cat);
-      if (item) item.actual += amt;
-
-      document.getElementById('exp-val').value = '';
-      document.getElementById('exp-note').value = '';
+      const itm = budgetItems.find(i => i.name === cat);
+      if (itm) itm.actual += amt;
+      document.getElementById('exp-amt').value = '';
+      document.getElementById('exp-desc').value = '';
       recalcBudget();
     }
 
     function recalcBudget() {
-      const income = parseFloat(document.getElementById('bm-income-input').value) || 0;
-      let totalPlanned = 0;
-      let totalActual = 0;
+      const income = parseFloat(document.getElementById('bm-income').value) || 0;
+      let totP = 0, totA = 0;
       const tbody = document.getElementById('bm-table-body');
       tbody.innerHTML = '';
+      let over = [];
 
-      let overspentList = [];
+      budgetItems.forEach(b => {
+        totP += b.planned;
+        totA += b.actual;
+        const diff = b.planned - b.actual;
+        const isOver = b.actual > b.planned;
+        if (isOver) over.push(b.name);
 
-      budgetCategories.forEach(c => {
-        totalPlanned += c.planned;
-        totalActual += c.actual;
-        const diff = c.planned - c.actual;
-        const isOver = c.actual > c.planned;
-        if (isOver) overspentList.push(c.name);
-
-        const statusTag = isOver
-          ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-950 text-rose-400 border border-rose-800">OVERSPENT</span>`
-          : `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">WITHIN LIMIT</span>`;
+        const st = isOver
+          ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-over">OVER</span>`
+          : `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-ok">OK</span>`;
 
         tbody.innerHTML += `
-          <tr class="${isOver ? 'bg-rose-950/20' : ''}">
-            <td class="py-2.5 px-3 text-gray-200 font-sans">${c.name}</td>
-            <td class="py-2.5 px-3 text-right text-gray-400">${formatPKR(c.planned)}</td>
-            <td class="py-2.5 px-3 text-right font-bold ${isOver ? 'text-rose-400' : 'text-gray-200'}">${formatPKR(c.actual)}</td>
-            <td class="py-2.5 px-3 text-right font-bold ${diff < 0 ? 'text-rose-400' : 'text-emerald-400'}">${diff < 0 ? '-' : ''}${formatPKR(Math.abs(diff))}</td>
-            <td class="py-2.5 px-3 text-center">${statusTag}</td>
+          <tr>
+            <td class="py-1.5 font-sans">${b.name}</td>
+            <td class="py-1.5 text-right text-gray-500">${formatPKR(b.planned)}</td>
+            <td class="py-1.5 text-right font-medium ${isOver ? 'text-red-700' : 'text-gray-900'}">${formatPKR(b.actual)}</td>
+            <td class="py-1.5 text-right ${diff < 0 ? 'text-red-700 font-bold' : 'text-emerald-700'}">${diff < 0 ? '-' : ''}${formatPKR(Math.abs(diff))}</td>
+            <td class="py-1.5 text-center">${st}</td>
           </tr>
         `;
       });
 
-      const remaining = income - totalActual;
+      const remaining = income - totA;
       const savings = Math.max(0, remaining);
-      const savingsRate = income > 0 ? ((savings / income) * 100).toFixed(1) : 0;
+      const rate = income > 0 ? ((savings / income) * 100).toFixed(1) : 0;
 
-      document.getElementById('bm-kpi-planned').textContent = formatPKR(totalPlanned);
-      document.getElementById('bm-kpi-actual').textContent = formatPKR(totalActual);
+      document.getElementById('bm-kpi-planned').textContent = formatPKR(totP);
+      document.getElementById('bm-kpi-actual').textContent = formatPKR(totA);
       document.getElementById('bm-kpi-balance').textContent = formatPKR(remaining);
-      document.getElementById('bm-kpi-savings').textContent = `${savingsRate}%`;
+      document.getElementById('bm-kpi-savings').textContent = `${rate}%`;
 
-      const alertBanner = document.getElementById('bm-overspend-alert');
-      if (overspentList.length > 0) {
-        alertBanner.classList.remove('hidden');
-        document.getElementById('bm-overspend-desc').textContent = 
-          `Warning: ${overspentList.join(', ')} has exceeded the planned allocation. Please review expenditures to prevent deficit.`;
+      const overBox = document.getElementById('bm-overspend-box');
+      if (over.length > 0) {
+        overBox.classList.remove('hidden');
+        document.getElementById('bm-overspend-text').textContent = `${over.join(', ')} exceeded allocation.`;
       } else {
-        alertBanner.classList.add('hidden');
+        overBox.classList.add('hidden');
       }
     }
 
-    // Startup
-    recomputeTrip();
-    populateBudgetSelectors();
+    calculateTrip();
+    populateCats();
     recalcBudget();
   </script>
 </body>
