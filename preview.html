@@ -25,33 +25,29 @@
     input:focus, select:focus {
       border-color: #111827;
     }
-    .badge-ok {
-      background-color: #ECFDF5;
-      color: #065F46;
-      border: 1px solid #A7F3D0;
-    }
-    .badge-over {
-      background-color: #FEF2F2;
-      color: #991B1B;
-      border: 1px solid #FECACA;
-    }
-    .badge-neutral {
-      background-color: #F3F4F6;
-      color: #374151;
-      border: 1px solid #E5E7EB;
+    .badge-ok { background-color: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+    .badge-over { background-color: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+    .badge-neutral { background-color: #F3F4F6; color: #374151; border: 1px solid #E5E7EB; }
+
+    /* Print & PDF styling */
+    @media print {
+      body { background-color: #FFFFFF; }
+      header, .no-print, #tab-trip-btn, #tab-budget-btn, #tab-pdf-btn, .nav-bar { display: none !important; }
+      #view-pdf { display: block !important; max-width: 100% !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+      .print-container { width: 100% !important; margin: 0 !important; padding: 0 !important; }
     }
   </style>
 </head>
 <body class="min-h-screen">
 
   <!-- Header -->
-  <header class="bg-white border-b border-gray-200">
+  <header class="bg-white border-b border-gray-200 no-print">
     <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
       <div>
         <h1 class="text-xl font-bold tracking-tight text-gray-900">Smart Life Planner</h1>
         <p class="text-xs text-gray-500">Pakistan Trip Planner &amp; Monthly Budget Manager</p>
       </div>
-      <div class="text-left sm:text-right text-xs text-gray-500">
+      <div class="text-xs text-gray-500">
         <span class="font-medium text-gray-900">Muhammad Ali Ajaz</span>
         <span class="mx-1">&bull;</span>
         <a href="https://github.com/muhammadaliajaz" target="_blank" class="text-gray-600 hover:text-black">@muhammadaliajaz</a>
@@ -62,8 +58,8 @@
   </header>
 
   <!-- Navigation Tabs -->
-  <div class="max-w-5xl mx-auto px-6 mt-6">
-    <div class="flex border-b border-gray-200 gap-6 text-sm">
+  <div class="max-w-5xl mx-auto px-6 mt-6 no-print">
+    <div class="flex border-b border-gray-200 gap-6 text-sm nav-bar">
       <button id="tab-trip-btn" onclick="switchTab('trip')" class="pb-3 border-b-2 border-black font-semibold text-black transition">
         Trip Planner
       </button>
@@ -77,13 +73,13 @@
   </div>
 
   <!-- Main Container -->
-  <main class="max-w-5xl mx-auto px-6 py-6">
+  <main class="max-w-5xl mx-auto px-6 py-6 print-container">
 
     <!-- 1. TRIP PLANNER VIEW -->
     <div id="view-trip" class="grid grid-cols-1 md:grid-cols-12 gap-8">
       
       <!-- Left: Form Controls (5 cols) -->
-      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4 no-print">
         <h2 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Trip Inputs</h2>
 
         <div>
@@ -147,6 +143,12 @@
           </div>
         </div>
 
+        <div class="pt-2">
+          <button type="button" onclick="downloadCurrentPlanPDF()" class="w-full bg-black text-white text-xs font-medium py-2.5 rounded hover:bg-gray-800 transition flex items-center justify-center gap-2">
+            <span>Download Trip PDF Report</span>
+          </button>
+        </div>
+
         <div class="text-[11px] text-gray-500 bg-gray-50 p-3 rounded border border-gray-100">
           Rooms: <span class="font-mono">ceil(travellers / 2)</span>. 0 nights has PKR 0 lodging cost.
         </div>
@@ -205,7 +207,7 @@
           </table>
         </div>
 
-        <!-- Over-Budget Alternatives (Shown only when over budget) -->
+        <!-- Over-Budget Alternatives -->
         <div id="opt-box" class="bg-white p-5 rounded-lg border border-amber-200 hidden space-y-2 text-xs">
           <div class="font-bold text-amber-800">Calculated Alternatives (Over Budget)</div>
           <p id="opt-text" class="text-gray-600"></p>
@@ -222,11 +224,11 @@
 
     </div>
 
-    <!-- 2. MONTHLY BUDGET VIEW -->
+    <!-- 2. MONTHLY BUDGET VIEW (Starts Clean / Empty) -->
     <div id="view-budget" class="hidden grid grid-cols-1 md:grid-cols-12 gap-8">
       
       <!-- Left: Form -->
-      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+      <div class="md:col-span-5 bg-white p-6 rounded-lg border border-gray-200 space-y-4 no-print">
         <h2 class="text-sm font-bold text-gray-900 border-b border-gray-100 pb-2">Budget Setup</h2>
 
         <div>
@@ -235,8 +237,8 @@
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-gray-700 mb-1">Total Available Income (PKR)</label>
-          <input type="number" id="bm-income" value="150000" min="5000" step="5000" oninput="recalcBudget()">
+          <label class="block text-xs font-medium text-gray-700 mb-1">Total Available Monthly Amount (PKR)</label>
+          <input type="number" id="bm-income" placeholder="Enter total available funds (e.g. 50000)" value="" oninput="recalcBudget()">
         </div>
 
         <div>
@@ -247,13 +249,32 @@
           </select>
         </div>
 
+        <!-- Set Planned Allocation -->
         <div class="border-t border-gray-100 pt-3 space-y-2">
-          <div class="text-xs font-semibold text-gray-900">Record Expense</div>
+          <div class="text-xs font-semibold text-gray-900">Set Category Planned Amount</div>
+          <div class="flex gap-2">
+            <select id="plan-cat-select" class="flex-1"></select>
+            <input type="number" id="plan-cat-amt" placeholder="Planned PKR" class="w-28 font-mono">
+          </div>
+          <button type="button" onclick="setPlannedCategory()" class="w-full bg-gray-100 text-gray-800 text-xs font-medium py-1.5 rounded hover:bg-gray-200 transition">
+            Set Planned Allocation
+          </button>
+        </div>
+
+        <!-- Record Expense -->
+        <div class="border-t border-gray-100 pt-3 space-y-2">
+          <div class="text-xs font-semibold text-gray-900">Record Actual Expense</div>
           <select id="exp-cat"></select>
-          <input type="number" id="exp-amt" placeholder="Amount (PKR)">
-          <input type="text" id="exp-desc" placeholder="Description">
+          <input type="number" id="exp-amt" placeholder="Expense Amount (PKR)">
+          <input type="text" id="exp-desc" placeholder="Expense Description (e.g. Groceries)">
           <button type="button" onclick="addExpense()" class="w-full bg-black text-white text-xs font-medium py-2 rounded hover:bg-gray-800 transition">
-            Add Expense
+            Record Expense Entry
+          </button>
+        </div>
+
+        <div class="pt-2">
+          <button type="button" onclick="downloadBudgetPDF()" class="w-full bg-white border border-gray-300 text-gray-800 text-xs font-medium py-2 rounded hover:bg-gray-50 transition">
+            Download Budget PDF Report
           </button>
         </div>
       </div>
@@ -265,15 +286,15 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
           <div class="bg-white p-3 rounded-lg border border-gray-200">
             <span class="text-gray-500 block">Total Planned</span>
-            <span id="bm-kpi-planned" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+            <span id="bm-kpi-planned" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0.00</span>
           </div>
           <div class="bg-white p-3 rounded-lg border border-gray-200">
             <span class="text-gray-500 block">Total Actual</span>
-            <span id="bm-kpi-actual" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+            <span id="bm-kpi-actual" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0.00</span>
           </div>
           <div class="bg-white p-3 rounded-lg border border-gray-200">
             <span class="text-gray-500 block">Remaining</span>
-            <span id="bm-kpi-balance" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0</span>
+            <span id="bm-kpi-balance" class="font-bold font-mono text-gray-900 text-sm mt-0.5 block">PKR 0.00</span>
           </div>
           <div class="bg-white p-3 rounded-lg border border-gray-200">
             <span class="text-gray-500 block">Savings Rate</span>
@@ -288,7 +309,10 @@
 
         <!-- Category Table -->
         <div class="bg-white p-5 rounded-lg border border-gray-200 space-y-3">
-          <div class="text-xs font-bold text-gray-900">Category Breakdown</div>
+          <div class="flex justify-between items-center">
+            <div class="text-xs font-bold text-gray-900">Category Allocation &amp; Spending</div>
+            <button onclick="resetBudgetToZero()" class="text-[11px] text-gray-400 hover:text-red-600 transition">Clear All Entries</button>
+          </div>
           <table class="w-full text-xs">
             <thead>
               <tr class="border-b border-gray-200 text-gray-500 text-left">
@@ -307,37 +331,45 @@
 
     </div>
 
-    <!-- 3. PDF REPORT SPECIMEN -->
+    <!-- 3. PDF REPORT SPECIMEN & PRINT TEMPLATE -->
     <div id="view-pdf" class="hidden max-w-2xl mx-auto bg-white p-8 rounded-lg border border-gray-300 shadow-sm text-xs space-y-6">
+      
+      <div class="flex justify-between items-center no-print border-b pb-3">
+        <span class="text-xs font-semibold text-gray-500">Official Report Preview</span>
+        <button onclick="window.print()" class="bg-black text-white px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-800 transition">
+          Print / Save as PDF
+        </button>
+      </div>
+
       <div class="border-b border-gray-200 pb-3 flex justify-between items-start">
         <div>
           <h2 class="text-lg font-bold text-gray-900">Smart Life Planner</h2>
-          <p class="text-gray-500 text-[11px]">Pakistan Trip Plan &amp; Cost Feasibility Report</p>
+          <p id="pdf-doc-subtitle" class="text-gray-500 text-[11px]">Pakistan Trip Plan &amp; Cost Feasibility Report</p>
         </div>
         <div class="text-right text-[11px] font-mono text-gray-500">
-          <p>Report ID: TRIP-20261125-61BB1F</p>
+          <p id="pdf-doc-id">Report ID: TRIP-20261125-61BB1F</p>
           <p>Status: <span class="text-emerald-700 font-bold">CONFIRMED</span></p>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-50 p-3 rounded border border-gray-200 text-[11px]">
-        <div><span class="text-gray-400 block">Destination</span><b>Hunza (Mountains)</b></div>
-        <div><span class="text-gray-400 block">Departure</span><b>Islamabad</b></div>
-        <div><span class="text-gray-400 block">Duration</span><b>4 Days / 3 Nights</b></div>
-        <div><span class="text-gray-400 block">Travellers</span><b>2 Persons</b></div>
+      <div id="pdf-trip-meta" class="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-gray-50 p-3 rounded border border-gray-200 text-[11px]">
+        <div><span class="text-gray-400 block">Destination</span><b id="pdf-meta-dest">Hunza (Mountains)</b></div>
+        <div><span class="text-gray-400 block">Departure</span><b id="pdf-meta-dep">Islamabad</b></div>
+        <div><span class="text-gray-400 block">Duration</span><b id="pdf-meta-dur">4 Days / 3 Nights</b></div>
+        <div><span class="text-gray-400 block">Travellers</span><b id="pdf-meta-trav">2 Persons</b></div>
       </div>
 
       <table class="w-full border border-gray-200 text-[11px]">
         <thead class="bg-gray-100 text-gray-700">
           <tr><th class="p-2 text-left">Category</th><th class="p-2 text-right">Amount (PKR)</th></tr>
         </thead>
-        <tbody class="divide-y divide-gray-200 font-mono">
-          <tr><td class="p-2">Transportation</td><td class="p-2 text-right">33,600.00</td></tr>
-          <tr><td class="p-2">Accommodation</td><td class="p-2 text-right">27,000.00</td></tr>
-          <tr><td class="p-2">Food &amp; Dining</td><td class="p-2 text-right">29,120.00</td></tr>
-          <tr><td class="p-2">Activities &amp; Misc</td><td class="p-2 text-right">10,800.00</td></tr>
-          <tr><td class="p-2">Emergency (10%)</td><td class="p-2 text-right">10,052.00</td></tr>
-          <tr class="bg-gray-50 font-bold"><td class="p-2">Total Estimated Cost</td><td class="p-2 text-right">PKR 110,572.00</td></tr>
+        <tbody id="pdf-breakdown-body" class="divide-y divide-gray-200 font-mono">
+          <tr><td class="p-2">Transportation</td><td id="pdf-cost-trans" class="p-2 text-right">33,600.00</td></tr>
+          <tr><td class="p-2">Accommodation</td><td id="pdf-cost-accom" class="p-2 text-right">27,000.00</td></tr>
+          <tr><td class="p-2">Food &amp; Dining</td><td id="pdf-cost-food" class="p-2 text-right">29,120.00</td></tr>
+          <tr><td class="p-2">Activities &amp; Misc</td><td id="pdf-cost-act" class="p-2 text-right">10,800.00</td></tr>
+          <tr><td class="p-2">Emergency (10%)</td><td id="pdf-cost-em" class="p-2 text-right">10,052.00</td></tr>
+          <tr class="bg-gray-50 font-bold"><td class="p-2">Total Estimated Cost</td><td id="pdf-cost-total" class="p-2 text-right">PKR 110,572.00</td></tr>
         </tbody>
       </table>
 
@@ -370,6 +402,7 @@
     };
 
     function formatPKR(n) {
+      if (isNaN(n)) n = 0;
       return "PKR " + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
@@ -391,6 +424,8 @@
       if (parseInt(nInput.value) > d) nInput.value = d;
       calculateTrip();
     }
+
+    let lastCalculatedTrip = {};
 
     function calculateTrip() {
       const budget = parseFloat(document.getElementById('t-budget').value) || 0;
@@ -415,6 +450,11 @@
       const emergency = subtotal * (emPct / 100);
       const total = subtotal + emergency;
       const perPerson = total / travellers;
+
+      lastCalculatedTrip = {
+        destKey, travellers, days, nights, catKey, depCity,
+        trans, accom, food, act, emergency, total, perPerson, budget
+      };
 
       document.getElementById('cost-trans').textContent = formatPKR(trans);
       document.getElementById('cost-accom').textContent = formatPKR(accom);
@@ -482,56 +522,91 @@
           `;
         }
       }
+
+      updatePDFSpecimen();
     }
 
-    // Budget State
-    let budgetItems = [
-      { name: "Grocery", planned: 40000, actual: 38000 },
-      { name: "Electricity", planned: 25000, actual: 27000 },
-      { name: "Rent", planned: 35000, actual: 35000 },
-      { name: "Internet", planned: 5000, actual: 4800 },
-      { name: "Medical", planned: 10000, actual: 6000 }
-    ];
+    function updatePDFSpecimen() {
+      if (!lastCalculatedTrip.destKey) return;
+      document.getElementById('pdf-meta-dest').textContent = lastCalculatedTrip.destKey;
+      document.getElementById('pdf-meta-dep').textContent = lastCalculatedTrip.depCity;
+      document.getElementById('pdf-meta-dur').textContent = `${lastCalculatedTrip.days} Days / ${lastCalculatedTrip.nights} Nights`;
+      document.getElementById('pdf-meta-trav').textContent = `${lastCalculatedTrip.travellers} Persons`;
+      document.getElementById('pdf-cost-trans').textContent = Number(lastCalculatedTrip.trans).toFixed(2);
+      document.getElementById('pdf-cost-accom').textContent = Number(lastCalculatedTrip.accom).toFixed(2);
+      document.getElementById('pdf-cost-food').textContent = Number(lastCalculatedTrip.food).toFixed(2);
+      document.getElementById('pdf-cost-act').textContent = Number(lastCalculatedTrip.act).toFixed(2);
+      document.getElementById('pdf-cost-em').textContent = Number(lastCalculatedTrip.emergency).toFixed(2);
+      document.getElementById('pdf-cost-total').textContent = formatPKR(lastCalculatedTrip.total);
+    }
 
-    function changeBudgetType() {
-      const t = document.getElementById('bm-type').value;
-      if (t === 'home') {
-        budgetItems = [
-          { name: "Grocery", planned: 40000, actual: 38000 },
-          { name: "Electricity", planned: 25000, actual: 27000 },
-          { name: "Rent", planned: 35000, actual: 35000 },
-          { name: "Internet", planned: 5000, actual: 4800 },
-          { name: "Medical", planned: 10000, actual: 6000 }
-        ];
-      } else {
-        budgetItems = [
-          { name: "Shopping", planned: 30000, actual: 32000 },
-          { name: "Gym", planned: 8000, actual: 8000 },
-          { name: "Dining Out", planned: 25000, actual: 29000 },
-          { name: "Savings", planned: 30000, actual: 30000 },
-          { name: "Entertainment", planned: 10000, actual: 8500 }
-        ];
-      }
+    function downloadCurrentPlanPDF() {
+      switchTab('pdf');
+      window.print();
+    }
+
+    // ----------------- MONTHLY BUDGET ENGINE (Starts Clean 0.00) -----------------
+    const standardCategories = {
+      home: [
+        "Grocery", "Electricity", "Gas", "Water", "Internet",
+        "Rent", "Kitchen Supplies", "Medical Expenses", "Transportation", "Other"
+      ],
+      personal: [
+        "Cosmetics", "Fitness & Gym", "Health & Medical", "Shopping",
+        "Clothing", "Restaurants", "Transportation", "Education", "Entertainment", "Other"
+      ]
+    };
+
+    // Starts with 0.00 planned and 0.00 actual
+    let budgetItems = [];
+
+    function initializeCleanBudget(profile) {
+      const cats = standardCategories[profile] || standardCategories.home;
+      budgetItems = cats.map(c => ({ name: c, planned: 0, actual: 0 }));
       populateCats();
       recalcBudget();
     }
 
+    function changeBudgetType() {
+      const t = document.getElementById('bm-type').value;
+      initializeCleanBudget(t);
+    }
+
     function populateCats() {
-      const sel = document.getElementById('exp-cat');
-      sel.innerHTML = '';
+      const selPlan = document.getElementById('plan-cat-select');
+      const selExp = document.getElementById('exp-cat');
+      selPlan.innerHTML = '';
+      selExp.innerHTML = '';
       budgetItems.forEach(b => {
-        sel.innerHTML += `<option value="${b.name}">${b.name}</option>`;
+        selPlan.innerHTML += `<option value="${b.name}">${b.name}</option>`;
+        selExp.innerHTML += `<option value="${b.name}">${b.name}</option>`;
       });
+    }
+
+    function setPlannedCategory() {
+      const cat = document.getElementById('plan-cat-select').value;
+      const amt = parseFloat(document.getElementById('plan-cat-amt').value);
+      if (isNaN(amt) || amt < 0) return;
+      const itm = budgetItems.find(i => i.name === cat);
+      if (itm) itm.planned = amt;
+      document.getElementById('plan-cat-amt').value = '';
+      recalcBudget();
     }
 
     function addExpense() {
       const cat = document.getElementById('exp-cat').value;
       const amt = parseFloat(document.getElementById('exp-amt').value);
-      if (!amt || amt <= 0) return;
+      if (isNaN(amt) || amt <= 0) return;
       const itm = budgetItems.find(i => i.name === cat);
       if (itm) itm.actual += amt;
       document.getElementById('exp-amt').value = '';
       document.getElementById('exp-desc').value = '';
+      recalcBudget();
+    }
+
+    function resetBudgetToZero() {
+      budgetItems.forEach(i => { i.planned = 0; i.actual = 0; });
+      document.getElementById('bm-income').value = '';
       recalcBudget();
     }
 
@@ -546,19 +621,22 @@
         totP += b.planned;
         totA += b.actual;
         const diff = b.planned - b.actual;
-        const isOver = b.actual > b.planned;
+        const isOver = b.planned > 0 && b.actual > b.planned;
         if (isOver) over.push(b.name);
 
-        const st = isOver
-          ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-over">OVER</span>`
-          : `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-ok">OK</span>`;
+        let st = `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-neutral">-</span>`;
+        if (b.planned > 0 || b.actual > 0) {
+          st = isOver
+            ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-over">OVER</span>`
+            : `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold badge-ok">OK</span>`;
+        }
 
         tbody.innerHTML += `
           <tr>
             <td class="py-1.5 font-sans">${b.name}</td>
             <td class="py-1.5 text-right text-gray-500">${formatPKR(b.planned)}</td>
             <td class="py-1.5 text-right font-medium ${isOver ? 'text-red-700' : 'text-gray-900'}">${formatPKR(b.actual)}</td>
-            <td class="py-1.5 text-right ${diff < 0 ? 'text-red-700 font-bold' : 'text-emerald-700'}">${diff < 0 ? '-' : ''}${formatPKR(Math.abs(diff))}</td>
+            <td class="py-1.5 text-right ${diff < 0 ? 'text-red-700 font-bold' : (diff > 0 ? 'text-emerald-700' : 'text-gray-400')}">${diff < 0 ? '-' : ''}${formatPKR(Math.abs(diff))}</td>
             <td class="py-1.5 text-center">${st}</td>
           </tr>
         `;
@@ -576,15 +654,37 @@
       const overBox = document.getElementById('bm-overspend-box');
       if (over.length > 0) {
         overBox.classList.remove('hidden');
-        document.getElementById('bm-overspend-text').textContent = `${over.join(', ')} exceeded allocation.`;
+        document.getElementById('bm-overspend-text').textContent = `${over.join(', ')} exceeded planned allocation.`;
       } else {
         overBox.classList.add('hidden');
       }
     }
 
+    function downloadBudgetPDF() {
+      // Build budget specimen in view-pdf
+      document.getElementById('pdf-doc-subtitle').textContent = `Monthly Financial Report (${document.getElementById('bm-month').value})`;
+      document.getElementById('pdf-doc-id').textContent = `Report ID: BUD-${new Date().getTime().toString(16).toUpperCase()}`;
+      document.getElementById('pdf-trip-meta').innerHTML = `
+        <div><span class="text-gray-400 block">Month</span><b>${document.getElementById('bm-month').value}</b></div>
+        <div><span class="text-gray-400 block">Type</span><b>${document.getElementById('bm-type').options[document.getElementById('bm-type').selectedIndex].text}</b></div>
+        <div><span class="text-gray-400 block">Available</span><b>${formatPKR(parseFloat(document.getElementById('bm-income').value) || 0)}</b></div>
+        <div><span class="text-gray-400 block">Spent</span><b>${document.getElementById('bm-kpi-actual').textContent}</b></div>
+      `;
+      const tbody = document.getElementById('pdf-breakdown-body');
+      tbody.innerHTML = '';
+      budgetItems.forEach(b => {
+        if (b.planned > 0 || b.actual > 0) {
+          tbody.innerHTML += `<tr><td class="p-2">${b.name}</td><td class="p-2 text-right">${formatPKR(b.actual)}</td></tr>`;
+        }
+      });
+      tbody.innerHTML += `<tr class="bg-gray-50 font-bold"><td class="p-2">Total Actual Spending</td><td class="p-2 text-right">${document.getElementById('bm-kpi-actual').textContent}</td></tr>`;
+      switchTab('pdf');
+      window.print();
+    }
+
+    // Initialize
     calculateTrip();
-    populateCats();
-    recalcBudget();
+    initializeCleanBudget('home');
   </script>
 </body>
 </html>
