@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#083D33"/>
+      <stop offset="50%" stop-color="#0E6655"/>
+      <stop offset="100%" stop-color="#144D42"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F39C12"/>
+      <stop offset="100%" stop-color="#F1C40F"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="360" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Decorative Pattern Elements -->
+  <g opacity="0.08" stroke="#FFFFFF" stroke-width="1.5" fill="none">
+    <circle cx="1100" cy="80" r="160"/>
+    <circle cx="1100" cy="80" r="120"/>
+    <circle cx="1100" cy="80" r="80"/>
+    <circle cx="80" cy="300" r="140"/>
+    <circle cx="80" cy="300" r="100"/>
+    <path d="M 0,180 Q 300,100 600,180 T 1200,180" stroke-width="2"/>
+    <path d="M 0,220 Q 300,140 600,220 T 1200,220" stroke-width="2"/>
+  </g>
+
+  <!-- Top Badge -->
+  <g transform="translate(60, 42)">
+    <rect width="250" height="30" rx="15" fill="#FFFFFF" fill-opacity="0.15" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="1"/>
+    <circle cx="16" cy="15" r="5" fill="#2ECC71"/>
+    <text x="32" y="20" fill="#E8F8F5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">PYTHON 3.10+ APPLICATION</text>
+  </g>
+
+  <!-- Title & Subtitle -->
+  <text x="60" y="130" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="50" font-weight="900" letter-spacing="-1">
+    Smart Life Planner
+  </text>
+  
+  <text x="60" y="172" fill="url(#goldGrad)" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" letter-spacing="0.5">
+    Pakistan Trip Planner &amp; Monthly Budget Manager
+  </text>
+
+  <text x="60" y="210" fill="#D1F2EB" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="400">
+    Intelligent Budget Optimization &bull; Deterministic Cost Engine &bull; ReportLab Multi-Page PDF &bull; 73 Pytest Units
+  </text>
+
+  <!-- Feature Cards on the Right -->
+  <g transform="translate(770, 45)" filter="url(#shadow)">
+    <!-- Card 1: Module 1 -->
+    <rect x="0" y="0" width="370" height="120" rx="14" fill="url(#cardGrad)" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1"/>
+    <text x="24" y="36" fill="#F1C40F" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20">🏔️</text>
+    <text x="56" y="36" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Module 1: Pakistan Trip Planner</text>
+    <text x="24" y="66" fill="#D1F2EB" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">9 Destination Catalogs &bull; Murree, Hunza, Skardu</text>
+    <text x="24" y="88" fill="#A3E4D7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500">5-Strategy Algorithmic Budget Optimizer</text>
+
+    <!-- Card 2: Module 2 -->
+    <rect x="0" y="140" width="370" height="120" rx="14" fill="url(#cardGrad)" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1"/>
+    <text x="24" y="176" fill="#2ECC71" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20">💳</text>
+    <text x="56" y="176" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="700">Module 2: Monthly Budget Manager</text>
+    <text x="24" y="206" fill="#D1F2EB" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="400">Home &amp; Kitchen &bull; Personal Finance &bull; Custom</text>
+    <text x="24" y="228" fill="#A3E4D7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="500">Counter &amp; Deque &bull; Real-time Overspending Alerts</text>
+  </g>
+
+  <!-- Bottom Details Bar -->
+  <g transform="translate(60, 265)">
+    <line x1="0" y1="0" x2="680" y2="0" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="1"/>
+    <text x="0" y="32" fill="#E8F8F5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600">
+      Author: Muhammad Ali Ajaz
+    </text>
+    <text x="240" y="32" fill="#A3E4D7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+      GitHub: @muhammadaliajaz
+    </text>
+    <text x="450" y="32" fill="#A3E4D7" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13">
+      chaudharyaliajaz@gmail.com
+    </text>
+  </g>
+</svg>
