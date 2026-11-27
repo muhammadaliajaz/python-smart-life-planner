@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/muhammadaliajaz/python-smart-life-planner/main/assets/banner.svg" alt="Smart Life Planner Banner" width="100%">
+  <img src="./assets/banner.png" alt="Smart Life Planner Banner" width="100%">
 </p>
 
 <p align="center">
@@ -250,9 +250,9 @@ flowchart TD
 ### Module One: Pakistan Trip Planner
 $$\text{Transportation Cost} = \text{cost per person} \times \text{travellers}$$
 $$\text{Required Rooms} = \left\lceil \frac{\text{travellers}}{\text{room capacity}} \right\rceil$$
-$$\text{Accommodation Cost} = \begin{cases} 0 & \text{if } \text{nights} = 0 \\ \text{room rate} \times \text{required rooms} \times \text{nights} & \text{if } \text{nights} > 0 \end{cases}$$
+$$\text{Accommodation Cost} = \text{room rate} \times \text{required rooms} \times \text{nights} \quad (\text{0 if nights} = 0)$$
 $$\text{Food Cost} = \text{daily food cost per person} \times \text{travellers} \times \text{days}$$
-$$\text{Activities \& Misc} = \text{activity rate per person} \times \text{travellers}$$
+$$\text{Activities and Misc} = \text{activity rate per person} \times \text{travellers}$$
 $$\text{Subtotal} = \text{Transportation} + \text{Accommodation} + \text{Food} + \text{Activities}$$
 $$\text{Emergency Allowance} = \text{Subtotal} \times \left(\frac{\text{emergency percentage}}{100}\right)$$
 $$\text{Total Trip Cost} = \text{Subtotal} + \text{Emergency Allowance}$$
@@ -265,7 +265,7 @@ $$\text{Remaining Balance} = \text{Total Available Income} - \text{Total Actual}
 $$\text{Net Savings} = \max(0, \text{Remaining Balance})$$
 $$\text{Savings Percentage} = \left(\frac{\text{Net Savings}}{\text{Total Available Income}}\right) \times 100$$
 $$\text{Category Difference}_i = \text{Planned Amount}_i - \text{Actual Amount}_i$$
-$$\text{Category Overspent if: } \text{Actual Amount}_i > \text{Planned Amount}_i$$
+$$\text{Category Overspent if } \text{Actual Amount}_i > \text{Planned Amount}_i$$
 
 ---
 
