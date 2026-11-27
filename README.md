@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="./preview.html"><b>👉 Click Here to Open Interactive Dashboard (preview.html)</b></a>
+  <a href="https://htmlpreview.github.io/?https://github.com/muhammadaliajaz/python-smart-life-planner/blob/main/preview.html"><b>👉 Click Here to Launch Live Interactive Dashboard</b></a>
 </p>
 
 <p align="center">
@@ -36,16 +36,15 @@ Both modules feature state rollback protection, atomic JSON persistence, 73 auto
 
 ## 2. Interactive HTML Web Preview
 
-An interactive HTML dashboard is included directly in the root of the repository for live exploration and demonstration:
+An interactive HTML dashboard is included for live exploration, testing, and evaluation:
 
-👉 **[Launch Interactive Dashboard (preview.html)](./preview.html)**
+- 🌐 **[Live Online Preview (Instant in Browser)](https://htmlpreview.github.io/?https://github.com/muhammadaliajaz/python-smart-life-planner/blob/main/preview.html)**
+- 📁 **Local File:** Double-click `preview.html` or `index.html` in your local project folder to open in Chrome/Edge/Firefox.
 
-### How to Open:
-1. Double-click `preview.html` in your file explorer, or open it in any web browser (Chrome, Edge, Firefox, Safari).
-2. **Interactive Features Included:**
-   - **Pakistan Trip Planner:** Test live costing by changing destination, budget, travellers, duration (days/nights), and tier. View live feasibility badges, day-wise itineraries, and real-time optimization alternatives when over budget.
-   - **Monthly Budget Manager:** Adjust monthly income, switch budget types, add expenses in real time, view remaining balance, and see overspending alerts.
-   - **PDF Report Specimen:** Visual representation of the ReportLab generated multi-page PDF layout with developer credentials in the footer.
+### Interactive Features Included:
+1. **Pakistan Trip Planner:** Test live costing by changing destination, budget, travellers, duration (days/nights), and tier. View live feasibility badges, day-wise itineraries, and real-time optimization alternatives when over budget.
+2. **Monthly Budget Manager:** Adjust monthly income, switch budget types, add expenses in real time, view remaining balance, and see overspending alerts.
+3. **PDF Report Specimen:** Visual representation of the ReportLab generated multi-page PDF layout with developer credentials in the footer and direct download/print support.
 
 ---
 
