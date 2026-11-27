@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Smart Life Planner Banner" width="100%">
+  <img src="https://raw.githubusercontent.com/muhammadaliajaz/python-smart-life-planner/main/assets/banner.svg" alt="Smart Life Planner Banner" width="100%">
 </p>
 
 <p align="center">
@@ -55,9 +55,9 @@ An interactive HTML dashboard is included directly in the root of the repository
 
 ```mermaid
 flowchart TD
-    User([User / CLI Terminal]) --> Main[main.py: SmartLifePlannerApp]
+    User(["User / CLI Terminal"]) --> Main["main.py: SmartLifePlannerApp"]
     
-    subgraph Navigation ["Application Routing"]
+    subgraph Navigation["Application Routing"]
         Main --> M1["1. Pakistan Trip Planner"]
         Main --> M2["2. Monthly Budget Manager"]
         Main --> M3["3. View Previous PDF Reports"]
@@ -65,33 +65,35 @@ flowchart TD
         Main --> M5["5. Exit"]
     end
 
-    subgraph Module1 ["Module One: Pakistan Trip Planner"]
-        M1 --> TP[TripPlanner]
-        TP --> TC[TripCostCalculator]
-        TP --> TFC[TripFeasibilityChecker]
-        TFC -->|Over Budget| TO[TripOptimizer]
-        TO -->|Calculate 5 Strategies| TFR[Ranked Feasible Alternatives]
-        TP -->|Review & Modify| Rollback[Snapshot & Rollback Engine]
-        TP -->|Confirm Plan| PDF1[PDFReportGenerator: Trip Report]
+    subgraph Module1["Module One: Pakistan Trip Planner"]
+        M1 --> TP["TripPlanner"]
+        TP --> TC["TripCostCalculator"]
+        TP --> TFC["TripFeasibilityChecker"]
+        TFC -->|Over Budget| TO["TripOptimizer"]
+        TO -->|5 Optimization Strategies| TFR["Ranked Feasible Alternatives"]
+        TP -->|Review and Modify| Rollback["Snapshot and Rollback Engine"]
+        TP -->|Confirm Plan| PDF1["PDFReportGenerator: Trip Report"]
     end
 
-    subgraph Module2 ["Module Two: Monthly Budget Manager"]
-        M2 --> BM[MonthlyBudgetManager]
-        BM --> BModel[Budget Model: Home / Personal / Custom]
-        BModel --> CatMgr[Category Allocations & Deduplication]
-        BModel --> ExpMgr[Expense Ledger: Add / Edit / Delete]
-        BModel --> Analytics[Analytics: Counter, Balance & Overspending]
-        BM -->|Confirm Budget| PDF2[PDFReportGenerator: Budget Report]
+    subgraph Module2["Module Two: Monthly Budget Manager"]
+        M2 --> BM["MonthlyBudgetManager"]
+        BM --> BModel["Budget Model: Home / Personal / Custom"]
+        BModel --> CatMgr["Category Allocations and Deduplication"]
+        BModel --> ExpMgr["Expense Ledger: Add / Edit / Delete"]
+        BModel --> Analytics["Analytics: Counter, Balance and Overspending"]
+        BM -->|Confirm Budget| PDF2["PDFReportGenerator: Budget Report"]
     end
 
-    subgraph Storage ["Data Persistence Layer"]
-        PDF1 & PDF2 --> DM[DataManager]
-        TP & BM --> DM
-        DM --> JSON1[(destinations.json)]
-        DM --> JSON2[(trips.json)]
-        DM --> JSON3[(budgets.json)]
-        DM --> CFG[(developer.json)]
-        DM --> ReportsFolder[reports/*.pdf]
+    subgraph Storage["Data Persistence Layer"]
+        PDF1 --> DM["DataManager"]
+        PDF2 --> DM
+        TP --> DM
+        BM --> DM
+        DM --> JSON1[("destinations.json")]
+        DM --> JSON2[("trips.json")]
+        DM --> JSON3[("budgets.json")]
+        DM --> CFG[("developer.json")]
+        DM --> ReportsFolder["reports/ (Generated PDFs)"]
     end
 ```
 
@@ -112,9 +114,9 @@ classDiagram
         +float activities_misc_cost_per_person
         +dict category_rates
         +list highlights
-        +get_rates(travel_category) dict
-        +to_dict() dict
-        +from_dict(data) Destination
+        +get_rates(travel_category) : dict
+        +to_dict() : dict
+        +from_dict(data) : Destination
     }
 
     class TripPlan {
@@ -129,23 +131,23 @@ classDiagram
         +CostBreakdown breakdown
         +bool is_confirmed
         +create_snapshot()
-        +restore_snapshot() bool
+        +restore_snapshot() : bool
         +confirm_plan()
-        +to_dict() dict
+        +to_dict() : dict
     }
 
     class TripCostCalculator {
-        +calculate_cost(destination, travellers, days, nights, budget, category, emergency_pct) CostBreakdown
+        +calculate_cost(destination, travellers, days, nights, budget, category, emergency_pct) : CostBreakdown
     }
 
     class TripFeasibilityChecker {
-        +evaluate_feasibility(breakdown, available_budget) dict
+        +evaluate_feasibility(breakdown, available_budget) : dict
     }
 
     class TripOptimizer {
         +dict destinations
-        +generate_alternatives(current_plan, destinations_pool) dict
-        -_calculate_score(travellers, days, cat_match, dest_match, budget_util) float
+        +generate_alternatives(current_plan, destinations_pool) : dict
+        +calculate_score(travellers, days, cat_match, dest_match, budget_util) : float
     }
 
     class Expense {
@@ -155,7 +157,7 @@ classDiagram
         +str description
         +str date
         +update(category, amount, description, date)
-        +to_dict() dict
+        +to_dict() : dict
     }
 
     class Budget {
@@ -165,34 +167,34 @@ classDiagram
         +dict planned_categories
         +list expenses
         +deque recent_actions
-        +add_category(name, amount) bool
-        +update_category(name, amount) bool
-        +remove_category(name) bool
+        +add_category(name, amount) : bool
+        +update_category(name, amount) : bool
+        +remove_category(name) : bool
         +add_expense(expense)
-        +delete_expense(expense_id) bool
-        +get_category_actual_totals() Counter
-        +get_total_planned() float
-        +get_total_actual() float
-        +get_remaining_balance() float
-        +get_savings() float
-        +get_savings_percentage() float
-        +get_overspending_categories() list
+        +delete_expense(expense_id) : bool
+        +get_category_actual_totals() : Counter
+        +get_total_planned() : float
+        +get_total_actual() : float
+        +get_remaining_balance() : float
+        +get_savings() : float
+        +get_savings_percentage() : float
+        +get_overspending_categories() : list
     }
 
     class MonthlyBudgetManager {
         +DataManager data_manager
         +Budget active_budget
-        +create_budget(month, type, available) Budget
-        +record_expense(category, amount, desc, date) Expense
-        +save_current_budget() bool
-        +get_summary() dict
+        +create_budget(month, type, available) : Budget
+        +record_expense(category, amount, desc, date) : Expense
+        +save_current_budget() : bool
+        +get_summary() : dict
     }
 
     class PDFReportGenerator {
         +DataManager data_manager
         +dict developer_info
-        +generate_trip_pdf(plan) str
-        +generate_budget_pdf(budget) str
+        +generate_trip_pdf(plan) : str
+        +generate_budget_pdf(budget) : str
     }
 
     class NumberedCanvas {
@@ -214,31 +216,31 @@ classDiagram
 
 ```mermaid
 flowchart TD
-    Start([User Inputs Trip Parameters]) --> Calc[TripCostCalculator: Compute Itemized Total]
-    Calc --> Check{Is Total Cost <= Budget?}
+    Start(["User Inputs Trip Parameters"]) --> Calc["TripCostCalculator: Compute Itemized Total"]
+    Calc --> Check{"Is Total Cost <= Budget?"}
     
-    Check -->|Yes: Within Budget| Feasible[Feasible Status: Within Budget / Exactly On Budget]
-    Feasible --> Itinerary[Generate Day-Wise Itinerary]
-    Itinerary --> Review[Review & Confirm Plan]
-    Review --> PDF[Generate Official PDF Report]
+    Check -->|Yes: Within Budget| Feasible["Feasible Status: Within Budget / Exactly On Budget"]
+    Feasible --> Itinerary["Generate Day-Wise Itinerary"]
+    Itinerary --> Review["Review and Confirm Plan"]
+    Review --> PDF["Generate Official PDF Report"]
 
-    Check -->|No: Over Budget| OverBudget[Feasibility Status: Over Budget]
-    OverBudget --> OptEngine[TripOptimizer: Run 5 Optimization Strategies]
+    Check -->|No: Over Budget| OverBudget["Feasibility Status: Over Budget"]
+    OverBudget --> OptEngine["TripOptimizer: Run 5 Optimization Strategies"]
 
-    subgraph Strategies ["Calculated Feasible Alternatives Engine"]
-        OptEngine --> S1["1. Increase Budget: Min Required & Shortage"]
+    subgraph Strategies["Calculated Feasible Alternatives Engine"]
+        OptEngine --> S1["1. Increase Budget: Min Required and Shortage"]
         OptEngine --> S2["2. Reduce Travellers: Solve Max People within Budget"]
-        OptEngine --> S3["3. Reduce Duration: Solve Feasible Days & Nights"]
+        OptEngine --> S3["3. Reduce Duration: Solve Feasible Days and Nights"]
         OptEngine --> S4["4. Change Destination: Compare 8 Other Destinations"]
         OptEngine --> S5["5. Adjust Category: Downgrade to Budget / Standard"]
     end
 
-    Strategies --> Rank[Multi-Factor Objective Scoring & Ranking]
-    Rank --> Present[Present Ranked Feasible Plans to User]
-    Present --> Choice{User Decision}
-    Choice -->|Adopt Alternative| Modify[Update Plan Parameters]
+    Strategies --> Rank["Multi-Factor Objective Scoring and Ranking"]
+    Rank --> Present["Present Ranked Feasible Plans to User"]
+    Present --> Choice{"User Decision"}
+    Choice -->|Adopt Alternative| Modify["Update Plan Parameters"]
     Modify --> Calc
-    Choice -->|Cancel| Revert[Rollback to Previous State]
+    Choice -->|Cancel| Revert["Rollback to Previous State"]
 ```
 
 ---
