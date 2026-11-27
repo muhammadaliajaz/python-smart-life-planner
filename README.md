@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://htmlpreview.github.io/?https://github.com/muhammadaliajaz/python-smart-life-planner/blob/main/preview.html"><b>👉 Click Here to Launch Live Interactive Dashboard</b></a>
+  <a href="https://raw.githack.com/muhammadaliajaz/python-smart-life-planner/main/preview.html"><b>👉 Click Here to Launch Live Interactive Dashboard</b></a>
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@ Both modules feature state rollback protection, atomic JSON persistence, 73 auto
 
 An interactive HTML dashboard is included for live exploration, testing, and evaluation:
 
-- 🌐 **[Live Online Preview (Instant in Browser)](https://htmlpreview.github.io/?https://github.com/muhammadaliajaz/python-smart-life-planner/blob/main/preview.html)**
+- 🌐 **[Live Online Preview (Instant in Browser)](https://raw.githack.com/muhammadaliajaz/python-smart-life-planner/main/preview.html)**
 - 📁 **Local File:** Double-click `preview.html` or `index.html` in your local project folder to open in Chrome/Edge/Firefox.
 
 ### Interactive Features Included:
